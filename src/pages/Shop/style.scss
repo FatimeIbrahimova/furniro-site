@@ -1,0 +1,126 @@
+* {
+  .shop {
+    padding-top: 80px;
+    .products-filter {
+      background-color: #f9f1e7;
+      width: 100%;
+      &-container {
+        padding-top: 18px;
+        padding-bottom: 18px;
+        width: 85%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &-leftside {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          border-right: 1 px solid gray;
+          .line {
+            width: 2px;
+            height: 30px;
+            background-color: gray;
+            margin-left: 10px;
+            margin-right: 12px;
+          }
+          img {
+            cursor: pointer;
+          }
+          span {
+            font-size: 16px;
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            cursor: pointer;
+          }
+        }
+        &-rightside {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          input {
+            border: none;
+            padding: 5px 7px;
+            outline: none;
+            width: 46px;
+          }
+          .sort {
+            border: none;
+            padding: 5px 7px;
+            outline: none;
+          }
+        }
+      }
+    }
+
+    &.grid-view {
+      .products-section-container_cards-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 25px;
+
+        &-card {
+          width: 48% !important;
+        }
+      }
+    }
+    &.list-view {
+      .product-card-container {
+        width: 60% !important;
+        img {
+          object-fit: cover;
+        }
+      }
+      .products-section-container_cards-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        &-card {
+          width: 100% !important;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 860px) and (min-width: 790px) {
+  .shop {
+    .products-filter {
+      span {
+        font-size: 15px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 790px) and (min-width: 490px) {
+  .products-filter-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+
+@media only screen and (max-width: 734px) and (min-width: 670px) {
+  .grid-view {
+    .products-section-container_cards-wrapper {
+      gap: 20px !important;
+
+      &-card {
+        width: 45% !important;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 489px) {
+  .products-filter-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    span {
+      font-size: 11px !important;
+    }
+  }
+}

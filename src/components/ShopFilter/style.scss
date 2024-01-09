@@ -1,0 +1,41 @@
+.filter {
+    z-index: 2;
+    background-color: #f9f1e7;
+    // opacity: 0;
+    visibility: hidden;
+    display: none;
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s ease;
+    //  padding-bottom: 50px;
+    padding-top: 30px;
+    &-visible {
+      // opacity: 1;
+      visibility: visible;
+      display: block;
+    }
+    &-wrapper {
+      margin-left: 110px;
+      padding-bottom: 30px;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .react-select {
+      width: 210px;
+      z-index: 2;
+    }
+    .select-price{
+      width: 100px;
+      outline: none;
+      border:1px solid hsl(0, 0%, 80%);
+  padding: 8px;
+  border-radius: 5px;
+  height: 39px;
+    }
+    .new-filter{
+      display: flex;
+      align-items: center;
+      gap:2px;
+    }
+  }

@@ -1,0 +1,211 @@
+* {
+    font-family: "Poppins", sans-serif;
+    .reset-password {
+        padding-top: 80px;
+        &-section {
+            width: 100%;
+        }
+        &-form {
+            width: 500px;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+            background-color: white;
+            margin: 0 auto;
+            margin-top: 80px;
+            margin-bottom: 80px;
+            border-top: 5px solid #b88e2f;
+            .info {
+                padding-top: 30px;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                h4 {
+                    font-size: 14px;
+                    font-weight: 500;
+                    width: 350px;
+                    color: #b88e2f;
+                }
+                .fa-lock {
+                    color: gray;
+                    font-size: 30px;
+                }
+            }
+            .password-wrapper {
+                width: 100%;
+                margin-top: 30px;
+                display: flex;
+                flex-direction: column;
+                span {
+                    display: block;
+                    color: #b88e2f;
+                }
+                .btn{
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                    margin-right: 40px;
+                   button{
+                    border: 1px solid #b88e2f;
+                    background-color: #b88e2f;
+                    color: white;
+                    transition: 0.5s ease;
+                    padding: 5px 15px;
+                    cursor: pointer;
+                    border-radius: 5px;
+                    &:hover{
+                        background-color: white;
+                        color: #b88e2f;
+                    }
+                   }
+                }
+                input {
+                    outline: none;
+                    border: none;
+                    background-color: rgb(205, 202, 202);
+                    color: white;
+                    margin-top: 20px;
+                   padding: 10px 10px;
+                   width: 200px;
+                   display: flex;
+                   align-items: center;
+                   justify-content: center;
+                }
+            }
+            form {
+                padding-left: 40px;
+                .form-wrapper {
+                    margin-top: 30px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 30px;
+                    .form {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 4px;
+                        input {
+                            border: 1px solid #d9d7d7;
+                            width: 400px;
+                            padding: 12px 0px 12px 10px;
+                            outline: none;
+                            border-radius: 10px;
+                        }
+                        span {
+                            font-size: 14px;
+                        }
+                    }
+                }
+                .buttons {
+                    display: flex;
+                    align-items: center;
+                    gap: 30px;
+                    padding-bottom: 30px;
+                    button {
+                        margin-top: 50px;
+                        width: 150px;
+                        padding: 10px 0px 10px 5px;
+                        border-radius: 5px;
+                        border: none;
+                        background-color: #b88e2f;
+                        color: white;
+                        font-weight: 600;
+                        font-size: 16px;
+                        cursor: pointer;
+                        &:hover {
+                            background-color: white;
+                            color: #b88e2f;
+                            transition: 0.5s ease;
+                            border: 1px solid #b88e2f;
+                        }
+                    }
+                }
+            }
+            .reset-password-wrapper{
+                margin-top: 30px;
+                input {
+                    border: 1px solid #d9d7d7;
+                    width: 400px;
+                    padding: 12px 0px 12px 10px;
+                    outline: none;
+                    border-radius: 10px;
+                }
+                label {
+                    display:block;
+                    margin-bottom: 5px;
+                    margin-top: 20px;
+                }
+                .reset-password-btn{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding-top: 30px;
+                    padding-bottom: 30px;
+                    margin-right:50px;
+                   button{
+                    border: 1px solid #b88e2f;
+                    background-color: #b88e2f;
+                    color: white;
+                    transition: 0.5s ease;
+                    padding: 5px 15px;
+                    cursor: pointer;
+                    border-radius: 5px;
+                    &:hover{
+                        background-color: white;
+                        color: #b88e2f;
+                    }
+                   }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) and (min-width: 390px) {
+    .reset-password-form {
+        width: 350px !important;
+        .form {
+            input {
+                width: 250px !important;
+            }
+        }
+        .buttons {
+            gap: 10px !important;
+            button {
+                width: 120px !important;
+            }
+        }
+    }
+    .reset-password-wrapper{
+        input{
+            width: 250px !important;
+        }
+    }
+}
+
+@media only screen and (max-width: 390px) {
+    .reset-password-form {
+        width: 280px !important;
+        form {
+            padding-left: 30px !important;
+        }
+        .form {
+            input {
+                width: 230px !important;
+            }
+        }
+        .buttons {
+            gap: 10px !important;
+            button {
+                width: 100px !important;
+            }
+        }
+    }
+    .reset-password-wrapper{
+        input{
+            width: 200px !important;
+        }
+        h1{
+            font-size: 20px !important;
+        }
+    }
+}

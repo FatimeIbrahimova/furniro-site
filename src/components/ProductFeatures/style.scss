@@ -1,0 +1,88 @@
+.color-name {
+    font-size: 14px;
+    font-weight: 400;
+}
+h4 {
+    margin-top: 25px;
+    margin-bottom: 15px;
+    color: #9f9f9f;
+    font-size: 14px;
+    font-weight: 400;
+    display: inline-block;
+}
+.all-sizes {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    .size {
+        background-color: #f9f1e7;
+        cursor: pointer;
+        span {
+            color: black;
+            font-size: 13px;
+            display: inline-block;
+            padding: 5px 8px;
+        }
+    }
+    .selected {
+        background-color: #b88e2f;
+        span {
+            color: white;
+        }
+    }
+}
+
+.colors {
+    display: flex;
+    gap: 10px;
+    .color {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+}
+.product-buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 35px;
+    .count {
+        border-radius: 10px;
+        border: 1px solid #9f9f9f;
+        padding: 7px 8px;
+        display: flex;
+        align-items: center;
+        gap: 35px;
+        .decrease-increase {
+            cursor: pointer;
+            font-size: 20px;
+            &:hover {
+                color: #b88e2f;
+                transition: 0.5s ease-in;
+            }
+        }
+    }
+    button {
+        padding: 12px 60px;
+        border-radius: 15px;
+        border: 1px solid #000;
+        background-color: white;
+        &:hover {
+            background-color: #b88e2f;
+            color: white;
+            cursor: pointer;
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    button {
+        padding: 12px 20px !important;
+        border-radius: 12px !important;
+    }
+    .count {
+        display: flex;
+        gap: 15px !important;
+    }
+}

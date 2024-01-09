@@ -1,0 +1,247 @@
+* {
+    font-family: "Poppins", sans-serif;
+    .register {
+        padding-top: 80px;
+        &-section {
+            width: 100%;
+        }
+        &-form {
+            width: 60%;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+            background-color: white;
+            margin: 0 auto;
+            margin-top: 80px;
+            margin-bottom: 80px;
+            h2 {
+                padding-top: 30px;
+            }
+            form {
+                padding-left: 40px;
+                .form-wrapper {
+                    margin-top: 15px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 30px;
+                    .form-container {
+                        display: flex;
+                        gap: 15px;
+                        flex-direction: column;
+                        .form-wrapper-inputs {
+                            display: flex;
+                            gap: 30px;
+                        }
+                    }
+                    .form {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 4px;
+                        input {
+                            border: 1px solid #d9d7d7;
+                            width: 380px;
+                            padding: 12px 0px 12px 10px;
+                            outline: none;
+                            border-radius: 10px;
+                        }
+                        span {
+                            font-size: 14px;
+                        }
+                        .labels {
+                            display: flex;
+                            gap: 200px;
+                            font-size: 16px;
+                            .forget-password {
+                                font-size: 14px;
+                                color: #b88e2f;
+                                cursor: pointer;
+                            }
+                        }
+                    }
+                }
+                .btn-wrapper {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    margin-top: 50px;
+                    .error-msg {
+                        color: red;
+                        margin-bottom: 8px;
+                        text-align: center;
+                        font-size: 14px;
+                    }
+                }
+                button {
+                    width: 400px;
+                    padding: 10px 0px 10px 5px;
+                    border-radius: 5px;
+                    border: none;
+                    background-color: #b88e2f;
+                    color: white;
+                    font-weight: 600;
+                    font-size: 16px;
+                    cursor: pointer;
+
+                    &:hover {
+                        color: #b88e2f;
+                        background-color: white;
+                        transition: 0.5s ease;
+                        border: 1px solid #b88e2f;
+                    }
+                }
+                h3 {
+                    font-weight: 400;
+                    font-size: 15px;
+                    padding-left: 60px;
+                    margin-top: 10px;
+                    padding-bottom: 50px;
+                    a {
+                        span {
+                            color: black;
+                            padding-left: 5px;
+                            font-weight: 600;
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) and (min-width: 390px) {
+    .register-form {
+        width: 350px !important;
+        .form {
+            input {
+                width: 250px !important;
+            }
+            .labels {
+                gap: 40px !important;
+            }
+        }
+        button {
+            width: 250px !important;
+        }
+        h3 {
+            font-size: 11px !important;
+            padding-left: 19px !important;
+        }
+    }
+}
+
+
+
+@media only screen and (max-width: 1400px) {
+    .register {
+        .form {
+            input {
+                width: 350px !important;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    .register {
+        .form {
+            input {
+                width: 300px !important;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1160px) {
+    .register {
+        .form {
+            input {
+                width: 270px !important;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1055px) {
+    .register {
+        .form {
+            input {
+                width: 250px !important;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .form-wrapper-inputs {
+        display: flex;
+        flex-direction: column;
+    }
+    .register {
+        .form {
+            input {
+                width: 90% !important;
+            }
+        }
+        .btn-wrapper {
+            button {
+                width: 350px !important;
+                margin-right: 30px;
+            }
+            h3{
+                margin-right: 80px;
+            }
+            .error-msg{
+                margin-right: 30px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 850px) {
+    .register {
+        .btn-wrapper {
+            button {
+                width: 250px !important;
+                margin-right: 30px;
+            }
+            h3{
+                margin-right: 80px;
+                font-size: 10px;
+            }
+            .error-msg{
+                margin-right: 30px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 390px) {
+    .register-form {
+        width: 280px !important;
+        form {
+            padding-left: 30px !important;
+        }
+        .form {
+            input {
+                width: 230px !important;
+            }
+            .labels {
+                gap: 30px !important;
+            }
+        }
+    }
+    .register {
+        .btn-wrapper {
+            button {
+                width: 180px !important;
+            }
+            h3{
+                font-size: 8px !important;
+                padding-left: 35px !important;
+            }
+            .error-msg{
+                margin-right: 30px;
+            }
+        }
+    }
+}

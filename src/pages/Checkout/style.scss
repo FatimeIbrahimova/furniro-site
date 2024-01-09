@@ -1,0 +1,332 @@
+* {
+    font-family: "Poppins", sans-serif;
+    .checkout-page {
+        padding-top: 80px;
+        .checkout-section {
+            &-container {
+                padding-top: 50px;
+                // width: 80%;
+                // margin: 0 auto;
+                display: flex;
+                justify-content: space-between;
+                form {
+                    width: 80%;
+                    margin: 0 auto;
+
+                    display: flex;
+                    justify-content: space-between;
+                }
+                .err-msg {
+                    display: inline-block;
+                    font-size: 12px;
+                }
+                .billing-details {
+                    .form-container {
+                        width: 80%;
+                        margin: 0 auto;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 20px;
+                        h2 {
+                            font-size: 36px;
+                            font-weight: 600;
+                            font-family: "Poppins", sans-serif;
+                        }
+                        label {
+                            display: block;
+                            padding-bottom: 8px;
+                            font-size: 16px;
+                            font-weight: 500;
+                        }
+                        input {
+                            border-radius: 10px;
+                            border: 1px solid #9f9f9f;
+                            background: #fff;
+                            width: 100%;
+                            padding-top: 12px;
+                            padding-bottom: 12px;
+                            padding-left: 12px;
+                            padding-right: 80px;
+                            outline: none;
+                        }
+                        .additional-info {
+                            margin-top: 18px;
+                        }
+                        select {
+                            width: 100%;
+                            padding-top: 12px;
+                            padding-bottom: 12px;
+                            padding-left: 12px;
+                            outline: none;
+                            border-radius: 10px;
+                            border: 1px solid #9f9f9f;
+                            background: #fff;
+                            color: #9f9f9f;
+                        }
+                        .name_and_surname {
+                            display: flex;
+                            gap: 20px;
+                        }
+                    }
+                }
+                .order {
+                    &-context {
+                        margin-left: 10px;
+                        margin-top: 40px;
+                        margin-right: 10px;
+                        &_titles {
+                            display: flex;
+                            justify-content: space-between;
+                            margin-bottom: 15px;
+                            h2 {
+                                font-size: 24px;
+                                font-weight: 500;
+                            }
+                        }
+                        .product {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            margin-bottom: 15px;
+                            &-name {
+                                color: #9f9f9f;
+                                display: flex;
+                                align-items: center;
+                                span {
+                                    color: black;
+                                    font-size: 12px;
+                                    font-weight: 500;
+                                }
+                            }
+                            h3 {
+                                font-size: 16px;
+                                display: inline-block;
+                                font-weight: 400;
+                            }
+                            .total-price {
+                                color: #b88e2f;
+                                font-size: 24px;
+                                font-weight: 700;
+                            }
+                        }
+                        .line {
+                            height: 1px;
+                            width: 100%;
+                            background-color: #d9d9d9;
+                            margin-top: 30px;
+                        }
+                        &_bank-transfer {
+                            margin-top: 15px;
+                            &-title {
+                                display: flex;
+                                align-items: center;
+                                gap: 14px;
+                                .circle {
+                                    width: 14px;
+                                    height: 14px;
+                                    border-radius: 50%;
+                                    background-color: white;
+                                    border: 1px solid #9f9f9f;
+                                }
+
+                                h3 {
+                                    font-weight: 400;
+                                    font-size: 16px;
+                                }
+                            }
+                            .circle-active {
+                                border: none;
+                                background-color: black;
+                            }
+                            .checkboxs {
+                                margin-top: 20px;
+                                display: flex;
+                                flex-direction: column;
+                                gap: 10px;
+                                margin-bottom: 25px;
+                                .checkbox {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 14px;
+                                    .circle {
+                                        width: 14px;
+                                        height: 14px;
+                                        border-radius: 50%;
+                                        background-color: white;
+                                        border: 1px solid #9f9f9f;
+                                    }
+
+                                    .bank-circle {
+                                        width: 14px;
+                                        height: 14px;
+                                        border-radius: 50%;
+                                        background-color: white;
+                                        border: 1px solid #9f9f9f;
+                                    }
+                                    h3 {
+                                        color: #9f9f9f;
+                                        font-size: 16px;
+                                        font-weight: 500;
+                                    }
+                                    // .circle-active {
+                                    //     h3{
+                                    //         color: black;
+                                    //     }
+                                    // }
+                                    .cash-circle {
+                                        width: 14px;
+                                        height: 14px;
+                                        border-radius: 50%;
+                                        background-color: white;
+                                        border: 1px solid #9f9f9f;
+                                    }
+                                    // .checkbox-active{
+                                    //     border: none;
+                                    //     background-color: #9f9f9f;
+                                    // }
+                                    .circle-active {
+                                        border: none;
+                                        background-color: black;
+                                    }
+                                    .title-active {
+                                        color: black;
+                                    }
+                                }
+                                .text {
+                                    color: #9f9f9f;
+                                }
+                            }
+                            p {
+                                font-size: 16px;
+                                width: 528px;
+                                font-weight: 300;
+                            }
+                            .payment-info {
+                                color: #9f9f9f;
+                                text-align: justify;
+                                margin-top: 10px;
+                            }
+                            .privacy-span {
+                                font-size: 16px;
+                                font-weight: 600;
+                            }
+                            .order-btn {
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                margin-top: 30px;
+                                button {
+                                    padding: 10px 100px;
+                                    border: 1px solid black;
+                                    border-radius: 15px;
+                                    background-color: white;
+                                    font-size: 20px;
+                                    font-weight: 400;
+                                    cursor: pointer;
+                                    transition: 0.5s ease;
+                                    &:hover {
+                                        color: white;
+                                        background-color: #b88e2f;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 576px) and (min-width: 390px) {
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+
+        .order-context_bank-transfer {
+            p {
+                width: 300px !important;
+                text-align: justify;
+            }
+            .order-btn {
+                button {
+                    padding: 10px 50px !important;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 389px) {
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        .product {
+            h3,
+            span {
+                font-size: 12px !important;
+            }
+            .total-price {
+                font-size: 18px !important;
+            }
+        }
+        .order-context_bank-transfer {
+            p {
+                width: 250px !important;
+                text-align: justify;
+                font-size: 12px !important;
+            }
+            .order-btn {
+                button {
+                    padding: 10px 50px !important;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) and (min-width: 577px) {
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+
+        .order-context_bank-transfer {
+            p {
+                width: 450px !important;
+                text-align: justify;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1200px) and (min-width: 970px) {
+    .order-context {
+        &_bank-transfer {
+            p {
+                width: 400px !important;
+                text-align: justify;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 970px) and (min-width: 769px) {
+    .order-context {
+        &_bank-transfer {
+            p {
+                width: 270px !important;
+                font-size: 14px !important;
+                text-align: justify;
+            }
+            .order-btn {
+                button {
+                    padding: 10px 60px !important;
+                    font-size: 14px !important;
+                }
+            }
+        }
+    }
+}

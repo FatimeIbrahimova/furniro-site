@@ -1,0 +1,39 @@
+* {
+  .modal {
+    position: absolute;
+    z-index: 3;
+    top: 280px;
+    right: 50px;
+    width: 100%;
+  }
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    width: 400px;
+    transition: transform 0.3s ease-out;
+    transform: translateY(-100%);
+    .fa-x {
+      position: absolute;
+      right: 20px;
+      cursor: pointer;
+      color: #888;
+    }
+  }
+ 
+}
+
+@media only screen and (max-width: 768px) {
+  .modal {
+    right: 0px !important;
+  }
+  .modal-content {
+    width: 300px !important;
+  }
+}
+@media only screen and (max-width: 370px) {
+  .modal-content {
+    width: 280px !important;
+  }
+}
