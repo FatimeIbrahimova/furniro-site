@@ -5,7 +5,7 @@ import "./style.scss";
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import { ProductTypes } from "../../types";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleLike } from "../../redux/features/wishlistSlice";
+import { fetchWishlist} from "../../redux/features/wishlistSlice";
 import {
 	fetchData,
 	fetchDataShop,
@@ -26,6 +26,8 @@ const ProductCard: React.FC<ProductTypes> = () => {
 	const dataStatus = useSelector((state: RootState) => state.data.data.status);
 	const dataShop = useSelector((state: RootState) => state.data.dataShop.data);
 	const relatedData = useSelector((state: RootState) => state.data.relatedData);
+	const wishlistData:any=useSelector((state: RootState) => state.wishlist.fetchWishlist.data);
+	
 	const { id }: RouteParams = useParams();
 
 	const products = data?.map((item) => item.products);
@@ -61,13 +63,18 @@ const ProductCard: React.FC<ProductTypes> = () => {
 	const likedProducts: ProductTypes[] = useSelector(
 		(state: RootState) => state.wishlist.postWishlist.likedProducts
 	);
+	const userId = localStorage.getItem("userId");
+
+	useEffect(() => {
+		dispatch(fetchWishlist(userId));
+	}, []);
 
 	const handleClickLike = (likedProduct: ProductTypes) => {
-		dispatch(toggleLike(likedProduct));
 		setLikeClicked(true);
 		openModal(likedProduct.id);
 		setAddCard(false);
 	};
+
 
 	const handleProductDetail = (
 		e: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -131,6 +138,11 @@ const ProductCard: React.FC<ProductTypes> = () => {
 		setAddCard(true);
 		setLikeClicked(false);
 	};
+	console.log(wishlistData,"liked");
+	const favori = wishlistData?.[0]?.favorites;
+    const likedProductss = favori?.map((item:any) => item) || []; 
+	
+	
 	return (
 		<div className="product-card">
 			<div className="product-card-container">
@@ -242,19 +254,19 @@ const ProductCard: React.FC<ProductTypes> = () => {
 															</ul>
 														</li>
 
-														<li onClick={() => handleClickLike(item)}>
-															{likedProducts.some(
-																(product) => product.id === item.id
+														<li >
+															{likedProductss?.some(
+																(product:any) => product.productId === item.id
 															) ? (
 																<i className="fa-solid fa-heart"></i>
 															) : (
 																<img src={SvgIcon3} alt="icon" />
 															)}
-															{likedProducts.some(
-																(product) => product.id === item.id
+															{likedProductss?.some(
+																(product:any) => product.productId === item.id
 															)
-																? "Unlike"
-																: "Like"}
+																? <span>Unlike</span>
+																: <span onClick={() => handleClickLike(item)}>Like</span>}
 														</li>
 													</ul>
 												</div>
@@ -465,7 +477,7 @@ const ProductCard: React.FC<ProductTypes> = () => {
 										>
 											<button
 												className="card-btn"
-												onClick={() => openModal(item.id)}
+												onClick={() => handleAddToCard(item)}
 											>
 												Add to cart
 											</button>
@@ -522,7 +534,7 @@ const ProductCard: React.FC<ProductTypes> = () => {
 										</div>
 									</div>
 								</NavLink>
-								{/* {modal === item.id && (
+								{modal === item.id && (
 										<Modal
 										itemId={modal}
 										onClose={() => setModal(null)}
@@ -530,7 +542,7 @@ const ProductCard: React.FC<ProductTypes> = () => {
 										like={likeClicked}
 										card={addCard}
 									/>
-								)} */}
+								)}
 							</div>
 						))}
 					{isProductDetail &&

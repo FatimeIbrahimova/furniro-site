@@ -16,9 +16,7 @@ const Shop = () => {
 	const dataProductsLength = data?.map((item) => item?.products?.length);
 
 	const [selectedTitle, setSelectedTitle] = useState<any>("");
-	const [filterNumber, setFilterNumber] = useState<number>(
-		16
-	);
+	const [filterNumber, setFilterNumber] = useState<number>(16);
 
 	const handleTitleChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
 		const selectedValue = e.target.value;
@@ -82,7 +80,7 @@ const Shop = () => {
 						<div className="line"></div>
 						<span>
 							Showing 1–{filterNumber ? filterNumber : dataProductsLength} of{" "}
-							{dataProductsLength} results
+							{data?.[0]?.totalProductCount} results
 						</span>
 					</div>
 					<div className="products-filter-container-rightside">

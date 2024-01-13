@@ -46,7 +46,7 @@ const Contact: React.FC = () => {
 		onSubmit: async (values) => {
 			try {
 				const response = await fetch(
-					"http://immutable858-001-site1.atempurl.com/api/ContactMessage",
+					"https://immutable858-001-site1.atempurl.com/api/ContactMessage",
 					{
 						method: "POST",
 						headers: {

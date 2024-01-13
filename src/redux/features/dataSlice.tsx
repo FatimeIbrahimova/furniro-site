@@ -10,7 +10,7 @@ export const fetchData = createAsyncThunk(
 	"data/fetchData",
 	async (count: number) => {
 		const response = await axios.get(
-			`http://immutable858-001-site1.atempurl.com/api/UserProduct/Products?ShowMore.Take=${count}`
+			`https://immutable858-001-site1.atempurl.com/api/UserProduct/Products?ShowMore.Take=${count}`
 		);
 		return response.data;
 	}
@@ -41,7 +41,7 @@ export const fetchDataShop = createAsyncThunk(
 		productMaxPrice?:number;
 		isNew?:boolean
 	}) => {
-		let url = `http://immutable858-001-site1.atempurl.com/api/UserProduct/Products?Page=${page}&ShowMore.Take=${count}`;
+		let url = `https://immutable858-001-site1.atempurl.com/api/UserProduct/Products?Page=${page}&ShowMore.Take=${count}`;
 
 
 		if (sortValue !== 'undefined' && sortValue) {
@@ -87,7 +87,7 @@ export const fetchDataDetail = createAsyncThunk(
 		console.log("id", id);
 		if (id) {
 			const res = await axios.get(
-				`http://immutable858-001-site1.atempurl.com/api/UserProduct/getById/ProductPage?Id=${id}&SizeId=2`
+				`https://immutable858-001-site1.atempurl.com/api/UserProduct/getById/ProductPage?Id=${id}&SizeId=2`
 			);
 			return res.data;
 			
@@ -103,7 +103,7 @@ export const fetchRelatedData = createAsyncThunk(
 	async ({ id, count }: { id: string | undefined; count: number }) => {
 		if(id){
 			const res = await axios.get(
-				`http://immutable858-001-site1.atempurl.com/api/UserProduct/RelatedProducts?ShowMore.Take=${count}&MainProductId=${id}`
+				`https://immutable858-001-site1.atempurl.com/api/UserProduct/RelatedProducts?ShowMore.Take=${count}&MainProductId=${id}`
 			);
 			return res.data;
 		}
@@ -113,7 +113,7 @@ export const fetchSearchData = createAsyncThunk(
 	"data/fetchSearchData",
 	async ({ value, count }: { value: string; count: number }) => {
 		const res = await axios.get(
-			`http://immutable858-001-site1.atempurl.com/api/UserProduct/Products?Prompt=${value}&ShowMore.TakeProduct=${count}`
+			`https://immutable858-001-site1.atempurl.com/api/UserProduct/Products?Prompt=${value}&ShowMore.TakeProduct=${count}`
 		);
 		return res.data;
 	}

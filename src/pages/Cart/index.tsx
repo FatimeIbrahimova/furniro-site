@@ -13,6 +13,8 @@ import {
 } from "../../redux/features/cartSlice";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { CartItem, Product } from "../../types";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const Cart: React.FC = () => {
 	const dispatch: ThunkDispatch<{}, void, AnyAction> = useDispatch();
@@ -28,6 +30,9 @@ const Cart: React.FC = () => {
 	const fetchCartitems = useSelector(
 		(state: RootState) => state.cart.fetchCart.data
 	);
+
+	console.log(fetchCartitems);
+	
 
 	useEffect(() => {
 		dispatch(fetchCart(userId));
@@ -50,14 +55,30 @@ const Cart: React.FC = () => {
 		};
 
 		dispatch(removeCart(cartItem)).then(() => {
-			alert(removeCartdata?.message || "Ürün sepetten kaldırıldı.");
+			toast.success(removeCartdata?.message || "The product has been removed from the cart", {
+				position: "bottom-right",
+				autoClose: 2000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+			});
 		});
 	};
-
+    console.log(clearAlldata);
+	
 	const handleClearAll = () => {
-		dispatch(clearCart(userId));
-		alert(clearAlldata.message);
+		Swal.fire({
+			icon: "success",
+			title: clearAlldata.message || "Cart cleared",
+			showConfirmButton: false,
+			timer: 1500,
+		});
+		dispatch(clearCart(userId))
 	};
+console.log(fetchCartitems);
 
 	return (
 		<div className="cart-page">
@@ -83,7 +104,7 @@ const Cart: React.FC = () => {
 											<div className="product" key={product.productId}>
 												<div className="img-wrapper">
 													<img
-														src={product.productImages.imageFiles[0]}
+														src={product?.productImages?.imageFiles?.[0]}
 														alt="img"
 														loading="lazy"
 													/>
@@ -141,7 +162,7 @@ const Cart: React.FC = () => {
 													(acc, subtotal) =>
 														acc! + parseFloat(subtotal?.toString() ?? "0"),
 													0
-												)}
+												)?.toFixed(4)}
 										</span>
 									</span>
 								</div>
@@ -166,7 +187,7 @@ const Cart: React.FC = () => {
 													(acc, subtotal) =>
 														acc! + parseFloat(subtotal?.toString() ?? "0"),
 													0
-												)}
+												)?.toFixed(4)}
 										</span>
 									</span>
 								</div>

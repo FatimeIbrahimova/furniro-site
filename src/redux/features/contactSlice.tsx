@@ -13,7 +13,7 @@ export const postContact = createAsyncThunk(
 	  Authorization:string
 	}) => {
 	  const res = await axios.post(
-		"http://immutable858-001-site1.atempurl.com/api/ContactMessage",
+		"https://immutable858-001-site1.atempurl.com/api/ContactMessage",
 		values
 	  );
   
@@ -25,7 +25,7 @@ export const postContact = createAsyncThunk(
 	"fetchContact",
 	async()=>{
 		const res=await axios.get(
-			`http://immutable858-001-site1.atempurl.com/api/Contact`
+			`https://immutable858-001-site1.atempurl.com/api/Contact`
 		)
 		return res.data
 		
@@ -94,4 +94,3 @@ const rootContactReducer = combineReducers({
 
 export default rootContactReducer;
 
-// export default contactSlice.reducer

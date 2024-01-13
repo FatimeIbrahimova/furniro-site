@@ -44,7 +44,7 @@ export const ROUTES = [
             },
             {
                 path:"contact",
-                element:<Contact/>
+                element:<ProtectedRoute element={<Contact/>}/>
             },
             {
 				path: "/product/:id",
@@ -72,7 +72,7 @@ export const ROUTES = [
             },
             {
                 path:"password",
-                element:<ResetPassword/> 
+                element:<ProtectedRoute element={<ResetPassword/> } />
             },
             {
                 path:"wishlist",

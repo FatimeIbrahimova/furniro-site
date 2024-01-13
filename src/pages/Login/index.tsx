@@ -8,6 +8,7 @@ import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 const Login: React.FC = () => {
 	const dispatch: ThunkDispatch<{}, void, AnyAction> = useDispatch();
@@ -31,8 +32,9 @@ const Login: React.FC = () => {
 						confirm?.payload?.response?.data?.Message || "An error occurred"
 					);
 				} else if (confirm.meta.requestStatus === "fulfilled") {
-					alert("Login successfully");
-					navigate("/");
+					Swal.fire("Login successfully").then(()=>{
+						navigate("/");
+					})
 					seterror("");
 				}
 			});

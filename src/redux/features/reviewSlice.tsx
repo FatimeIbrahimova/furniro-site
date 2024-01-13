@@ -1,6 +1,7 @@
 import { combineReducers, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 
+const token=localStorage.getItem("token")
 export const postReview=createAsyncThunk(
     "postReview",
     async (
@@ -14,8 +15,14 @@ export const postReview=createAsyncThunk(
 	) => {
 		try {
 			const res = await axios.post(
-				"http://immutable858-001-site1.atempurl.com/api/Review",
-				values
+				"https://immutable858-001-site1.atempurl.com/api/Review",
+				values,{
+					headers: {
+						'accept': '*/*',
+						'Authorization': `Bearer ${token}`,
+						'Content-Type': 'application/json',
+					  },
+				}
 			);
 			console.log(res);
 
@@ -31,7 +38,7 @@ export const postReview=createAsyncThunk(
 	"fetchReview",
 	async ({productId, count }: { productId: string | undefined; count: number }) => {
 		const res = await axios.get(
-			`http://immutable858-001-site1.atempurl.com/api/Review/ProductReviews?ProductId=${productId}&ShowMore.Take=${count}`
+			`https://immutable858-001-site1.atempurl.com/api/Review/ProductReviews?ProductId=${productId}&ShowMore.Take=${count}`
 		);
 
 		return res.data;
@@ -46,8 +53,12 @@ export const deleteReview = createAsyncThunk(
 		appUserId:number,
 	}) => {
 		const res = await axios.delete(
-			"http://immutable858-001-site1.atempurl.com/api/Review",
-			{ data: values }
+			"https://immutable858-001-site1.atempurl.com/api/Review",
+			{ data: values,headers: {
+				'accept': '*/*',
+				'Authorization': `Bearer ${token}`,
+				'Content-Type': 'application/json',
+			  }, }
 		);
 console.log(res);
 

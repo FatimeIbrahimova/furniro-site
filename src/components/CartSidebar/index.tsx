@@ -62,7 +62,7 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ close, sidebarMenu }) => {
 					{fetchCartitems.length > 0 ? (
 						<>
 							<div className="sidebar-products">
-								{fetchCartitems?.map((item: CartItem,index:number) =>
+								{fetchCartitems?.map((item: CartItem, index: number) =>
 									item.cartItems?.map((item) => (
 										<div className="product" key={index}>
 											<NavLink to="/cart">
@@ -103,15 +103,24 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ close, sidebarMenu }) => {
 								<span className="total-price">
 									Rs.
 									<span className="total-price-number">
-										{fetchCartitems?.map((item: CartItem) =>
-											item.cartItems?.reduce(
-												(sum, item) =>
-													sum +
-													(item.discountedPrice ?? item.salePrice ?? 0) *
-														item.count,
+										{fetchCartitems
+											?.map((item: CartItem) =>
+												item.cartItems?.reduce(
+													(sum, product) =>
+														sum +
+														(product.salePrice ??
+															product.discountedPrice ??
+															0) *
+															product.count,
+													0
+												)
+											)
+											.reduce(
+												(acc: any, subtotal: any) =>
+													acc! + parseFloat(subtotal?.toString() ?? "0"),
 												0
 											)
-										)}
+											.toFixed(4)}
 									</span>
 								</span>
 							</div>

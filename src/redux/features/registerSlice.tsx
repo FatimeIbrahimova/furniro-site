@@ -12,7 +12,7 @@ export const postRegister = createAsyncThunk(
     }, {rejectWithValue}) => {
       try {
         const res = await axios.post(
-          "http://immutable858-001-site1.atempurl.com/api/ApplicationUser/CreateUser",
+          "https://immutable858-001-site1.atempurl.com/api/ApplicationUser/CreateUser",
           values
         );
   

@@ -35,7 +35,7 @@ const Profile = () => {
 		localStorage.removeItem("token")
 		localStorage.removeItem("userId")
 		alert("User Deleted Successfully");
-		navigate("/login");
+		navigate("/");
 	};
 
 	const [state, setState] = useState({

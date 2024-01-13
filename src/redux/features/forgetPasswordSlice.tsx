@@ -12,7 +12,7 @@ export const postEmailForgetPassword=createAsyncThunk(
 	) => {
 		try {
 			const res = await axios.post(
-				"http://immutable858-001-site1.atempurl.com/api/ForgotPassword/SendOTPEmail",
+				"https://immutable858-001-site1.atempurl.com/api/ForgotPassword/SendOTPEmail",
 				values
 			);
 			return res.data;
@@ -33,7 +33,7 @@ export const postEmailForgetPassword=createAsyncThunk(
 	) => {
 		try {
 			const res = await axios.post(
-				"http://immutable858-001-site1.atempurl.com/api/ForgotPassword/OtpConfirmation",
+				"https://immutable858-001-site1.atempurl.com/api/ForgotPassword/OtpConfirmation",
 				values
 			);
 			return res.data;
@@ -55,7 +55,7 @@ export const postEmailForgetPassword=createAsyncThunk(
 	) => {
 		try {
 			const res = await axios.post(
-				"http://immutable858-001-site1.atempurl.com/api/ForgotPassword/ResetPassword",
+				"https://immutable858-001-site1.atempurl.com/api/ForgotPassword/ResetPassword",
 				values
 			);
 			return res.data;

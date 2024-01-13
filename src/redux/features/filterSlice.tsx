@@ -6,7 +6,7 @@ export const fetchCategory = createAsyncThunk(
 	"data/fetchCategory",
 	async () => {
 		const res = await axios.get(
-			`http://immutable858-001-site1.atempurl.com/api/Category/getAll`
+			`https://immutable858-001-site1.atempurl.com/api/Category/getAll`
 		);
 		return res.data;
 	}
@@ -16,7 +16,7 @@ export const fetchTags = createAsyncThunk(
 	"data/fetchtags",
 	async () => {
 		const res = await axios.get(
-			`http://immutable858-001-site1.atempurl.com/api/Tag/getAll`
+			`https://immutable858-001-site1.atempurl.com/api/Tag/getAll`
 		);
 		return res.data;
 	}
@@ -26,7 +26,7 @@ export const fetchSizes = createAsyncThunk(
 	"data/fetchSizes",
 	async () => {
 		const res = await axios.get(
-			`http://immutable858-001-site1.atempurl.com/api/Size/getAll`
+			`https://immutable858-001-site1.atempurl.com/api/Size/getAll`
 		);
 		return res.data;
 	}
@@ -36,7 +36,7 @@ export const fetchColors = createAsyncThunk(
 	"data/fetchColors",
 	async () => {
 		const res = await axios.get(
-			`http://immutable858-001-site1.atempurl.com/api/Color/getAll`
+			`https://immutable858-001-site1.atempurl.com/api/Color/getAll`
 		);
 		return res.data;
 	}

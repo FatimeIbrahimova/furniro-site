@@ -13,6 +13,9 @@ import { RootState } from "../../redux";
 import { useFormik } from "formik";
 import { CheckoutSchema } from "../../schema/FormSchema";
 import Swal from "sweetalert2";
+import { CartItem } from "../../types";
+import { clearCart, fetchCart } from "../../redux/features/cartSlice";
+import {useNavigate } from "react-router-dom";
 
 const Checkout = () => {
 	const [orderInfo, setOrderInfo] = useState<boolean>(false);
@@ -22,12 +25,18 @@ const Checkout = () => {
 	const [cashInfo, setCashInfo] = useState<boolean>(false);
 	const [cashCircle, setCashCircle] = useState<boolean>(false);
 	const dispatch: ThunkDispatch<{}, void, AnyAction> = useDispatch();
+	const navigate=useNavigate()
 	const countries = useSelector(
 		(state: RootState) => state.checkoutPage.country.data
 	);
 	const provinces = useSelector(
 		(state: RootState) => state.checkoutPage.province.data
 	);
+	const fetchCartitems: any = useSelector(
+		(state: RootState) => state.cart.fetchCart.data
+	);
+
+	console.log(fetchCartitems);
 
 	const id = countries?.[0]?.id;
 	const provinceId = provinces?.[0]?.id;
@@ -132,7 +141,11 @@ const Checkout = () => {
 					);
 					alert(confirm?.payload?.response?.data?.Message || errMsg);
 				} else if (confirm.meta.requestStatus === "fulfilled") {
-					Swal.fire("Checkout Completed!");
+					Swal.fire("Checkout Completed!").then(()=>{
+						dispatch(clearCart(userId))
+						dispatch(fetchCart(userId));
+						navigate("/")
+					});
 					seterror("");
 					resetForm();
 				}
@@ -337,22 +350,51 @@ const Checkout = () => {
 								</div>
 								<div className="product">
 									<h3 className="product-name">
-										Asgaard sofa{" "}
-										<span>
-											X <span>100</span>
-										</span>
+										{fetchCartitems?.map((item: any) =>
+											item?.cartItems?.map((item: any) => (
+												<div key={item.id}>
+													{item.productTitle}
+													<span className="product-count">
+														X <span>{item.count}</span>,
+													</span>
+												</div>
+											))
+										)}
 									</h3>
-									<div>
-										<span>
-											Rs. <span>250,000.00</span>
-										</span>
+									<div style={{display:"flex",flexDirection:"column"}}>
+										{fetchCartitems?.map((item: any) =>
+											item?.cartItems?.map((item: any) => (
+												<span key={item.id}>
+													Rs. <span>{item.subtotal}</span>
+												</span>
+											))
+										)}
 									</div>
 								</div>
 								<div className="product">
 									<h3>Subtotal</h3>
 									<div>
 										<span>
-											Rs. <span>250,000.00</span>
+											Rs.{" "}
+											<span>
+												{fetchCartitems
+													?.map((item: CartItem) =>
+														item.cartItems?.reduce(
+															(sum, product) =>
+																sum +
+																(product.salePrice ??
+																	product.discountedPrice ??
+																	0) *
+																	product.count,
+															0
+														)
+													)
+													.reduce(
+														(acc: any, subtotal: any) =>
+															acc! + parseFloat(subtotal?.toString() ?? "0"),
+														0
+													).toFixed(4)}
+											</span>
 										</span>
 									</div>
 								</div>
@@ -360,7 +402,26 @@ const Checkout = () => {
 									<h3>Total</h3>
 									<div>
 										<span className="total-price">
-											Rs. <span>250,000.00</span>
+											Rs.{" "}
+											<span>
+												{fetchCartitems
+													?.map((item: CartItem) =>
+														item.cartItems?.reduce(
+															(sum, product) =>
+																sum +
+																(product.discountedPrice ??
+																	product.salePrice ??
+																	0) *
+																	product.count,
+															0
+														)
+													)
+													.reduce(
+														(acc: any, subtotal: any) =>
+															acc! + parseFloat(subtotal?.toString() ?? "0"),
+														0
+													).toFixed(4)}
+											</span>
 										</span>
 									</div>
 								</div>

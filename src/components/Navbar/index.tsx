@@ -114,9 +114,15 @@ const Navbar = () => {
 								</NavLink>
 
 								{wishlistData?.map((item: any,index:number) => (
-									<span className="basket_wishlist-count" key={index}>
-										{item?.favorites.length}
+									item?.favorites.length > 0 && (
+										<span className="basket_wishlist-count" key={index}>
+										{item?.favorites.length < 9 ? (
+											item?.favorites.length 
+										):(
+											<span>9+</span>
+										)}
 									</span>
+									)
 								))}
 							</li>
 							<li onClick={openSidebar} className="basket_wishlist">

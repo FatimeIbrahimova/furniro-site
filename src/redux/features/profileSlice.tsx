@@ -5,11 +5,12 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const token=localStorage.getItem("token")
 export const fetchProfile = createAsyncThunk(
 	"fetchProfile",
 	async (id: string | null) => {
 		const res = await axios.get(
-			`http://immutable858-001-site1.atempurl.com/api/ApplicationUser/${id}`
+			`https://immutable858-001-site1.atempurl.com/api/ApplicationUser/${id}`
 		);
 
 		return res.data;
@@ -21,8 +22,14 @@ export const deleteProfile = createAsyncThunk(
 	async (userName: string | undefined, { rejectWithValue }) => {
 		try {
 			const res = await axios.put(
-				"http://immutable858-001-site1.atempurl.com/api/ApplicationUser/DeleteUser",
-				userName
+				"https://immutable858-001-site1.atempurl.com/api/ApplicationUser/DeleteUser",
+				userName,{
+					headers: {
+						'accept': '*/*',
+						'Authorization': `Bearer ${token}`,
+						'Content-Type': 'application/json',
+					  },
+				}
 			);
 			console.log(res.data);
 
@@ -39,8 +46,14 @@ export const updateProfile = createAsyncThunk(
 	async (state: any) => {
 		try {
 			const res = await axios.put(
-				"http://immutable858-001-site1.atempurl.com/api/ApplicationUser/UpdateUser",
-				state
+				"https://immutable858-001-site1.atempurl.com/api/ApplicationUser/UpdateUser",
+				state,{
+					headers: {
+						'accept': '*/*',
+						'Authorization': `Bearer ${token}`,
+						'Content-Type': 'application/json',
+					  },
+				}
 			);
 			return res.data;
 		} catch (error) {
@@ -55,8 +68,14 @@ export const resetPassword = createAsyncThunk(
 	async (statePassword: any, { rejectWithValue }) => {
 		try {
 			const res = await axios.put(
-				"http://immutable858-001-site1.atempurl.com/api/ApplicationUser/ChangePassword",
-				statePassword
+				"https://immutable858-001-site1.atempurl.com/api/ApplicationUser/ChangePassword",
+				statePassword,{
+					headers: {
+						'accept': '*/*',
+						'Authorization': `Bearer ${token}`,
+						'Content-Type': 'application/json',
+					  },
+				}
 			);
 			console.log(res.data);
 
@@ -168,7 +187,6 @@ export const resetPasswordSlice = createSlice({
 				state.status = "loading";
 			})
 			.addCase(resetPassword.fulfilled, (state, action) => {
-				// console.log("Fulfilled action payload:", action.payload);
 				state.status = "succeeded";
 				state.data = action.payload;
 			})

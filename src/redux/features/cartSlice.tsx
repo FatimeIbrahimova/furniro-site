@@ -6,7 +6,7 @@ import {
 } from "@reduxjs/toolkit";
 import { ProductTypes } from "../../types";
 import axios from "axios";
-
+const token=localStorage.getItem("token")
 export const postCart = createAsyncThunk(
 	"postCart",
 	async (
@@ -20,8 +20,14 @@ export const postCart = createAsyncThunk(
 	) => {
 		try {
 			const res = await axios.post(
-				"http://immutable858-001-site1.atempurl.com/api/Cart/addToCart",
-				values
+				"https://immutable858-001-site1.atempurl.com/api/Cart/addToCart",
+				values,{
+					headers: {
+						'accept': '*/*',
+						'Authorization': `Bearer ${token}`,
+						'Content-Type': 'application/json',
+					  },
+				}
 			);
 
 			return res.data;
@@ -35,7 +41,13 @@ export const fetchCart = createAsyncThunk(
 	"fetchCart",
 	async (userId: number | any) => {
 		const res = await axios.get(
-			`http://immutable858-001-site1.atempurl.com/api/Cart/getAllCartItems/${userId}`
+			`https://immutable858-001-site1.atempurl.com/api/Cart/getAllCartItems/${userId}`,{
+				headers: {
+					'accept': '*/*',
+					'Authorization': `Bearer ${token}`,
+					'Content-Type': 'application/json',
+				  },
+			}
 		);
 		return res.data;
 	}
@@ -49,9 +61,15 @@ export const removeCart = createAsyncThunk(
 	) => {
 		try {
 			const res = await axios.delete(
-				"http://immutable858-001-site1.atempurl.com/api/Cart/remove",
-				{ data: cartItem }
+				"https://immutable858-001-site1.atempurl.com/api/Cart/remove",
+				{ data: cartItem ,headers: {
+					'accept': '*/*',
+					'Authorization': `Bearer ${token}`,
+					'Content-Type': 'application/json',
+				  },}
 			);
+			console.log(res.data);
+			
 			return res.data;
 		} catch (error) {
 			return rejectWithValue(error);
@@ -64,7 +82,7 @@ export const clearCart = createAsyncThunk(
 	async (userId: string | null, { rejectWithValue }) => {
 		try {
 			const res = await axios.post(
-				"http://immutable858-001-site1.atempurl.com/api/Cart/ClearCart",
+				"https://immutable858-001-site1.atempurl.com/api/Cart/ClearCart",
 				{ appUserId: userId } 
 			);
 			console.log(res.data);

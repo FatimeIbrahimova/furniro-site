@@ -55,10 +55,12 @@ const ResetPassword = () => {
 						console.log("Confirm: ", confirm.payload.response.data);
 						alert(confirm.payload.response.data.Message);
 					} else if (confirm.meta.requestStatus === "fulfilled") {
-						Swal.fire(confirm.payload);
+						Swal.fire(confirm.payload).then(()=>{
+							setOtpCode(false);
+							setResetPsw(true);
+						});
 						resetForm();
-						setOtpCode(false);
-						setResetPsw(true);
+						
 					}
 				});
 			} else if (enterEmail){
@@ -69,10 +71,11 @@ const ResetPassword = () => {
 						console.log("Confirm: ", confirm);
 						alert(confirm?.payload?.response?.data?.Message);
 					} else if (confirm.meta.requestStatus === "fulfilled") {
-						Swal.fire(confirm?.payload);
+						Swal.fire(confirm?.payload).then(()=>{
+							setOtpCode(true);
+							setEnterEmail(false)
+						});
 						resetForm();
-						setOtpCode(true);
-						setEnterEmail(false)
 						setEmail(values.email);
 					}
 				});
@@ -86,8 +89,9 @@ const ResetPassword = () => {
 									console.log("Confirm: ", confirm);
 									alert(confirm?.payload?.response?.data?.Message);
 								} else if (confirm.meta.requestStatus === "fulfilled") {
-									Swal.fire(confirm?.payload);
-									navigate("/login")
+									Swal.fire(confirm?.payload).then(()=>{
+										navigate("/login")
+									});
 								}
 							});
 						}

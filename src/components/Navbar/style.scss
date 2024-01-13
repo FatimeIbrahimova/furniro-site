@@ -34,6 +34,10 @@
                         a {
                             color: black;
                             text-decoration: none;
+                            transition: 0.5s ease;
+                            &:hover{
+                                color: #b88e2f;
+                            }
                             &.active {
                                 color: #b88e2f !important;
                             }

@@ -6,7 +6,7 @@ export const fetchDescription = createAsyncThunk(
 	"data/fetchDescription",
 	async (id: string | undefined) => {
 		const res = await axios.get(
-			`http://immutable858-001-site1.atempurl.com/api/UserProduct/getById/Description?Id=${id}`
+			`https://immutable858-001-site1.atempurl.com/api/UserProduct/getById/Description?Id=${id}`
 		);
 		return res.data;
 	}

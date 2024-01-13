@@ -19,6 +19,7 @@ const Modal = ({ itemId, onClose, isModal, like, card }: any) => {
 			{like && (
 				<>
 					<div className="modal-content">
+						<i className="fa-solid fa-x" onClick={() => closeModal()}></i>
 						<ProductFeatures itemId={itemId} isModal={isModal} like={like} />
 					</div>
 				</>

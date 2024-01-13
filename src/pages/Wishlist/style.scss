@@ -9,7 +9,7 @@
                 margin: 0 auto;
                 padding-bottom: 80px;
                 &-title {
-                    width: 58%;
+                    width: 55%;
                     display: flex;
                     align-items: center;
                     margin-left: 175px;
@@ -17,6 +17,9 @@
                     h1 {
                         font-size: 20px;
                         color: #b88e2f;
+                    }
+                    .color-title{
+                        padding-left: 70px;
                     }
                 }
                 .no-products-message {
@@ -105,6 +108,9 @@
 @media only screen and (max-width: 1330px) {
     .wishlist-section-container-title{
         width:57.5% !important;
+        .color-title{
+            padding-right: 30px !important;
+        }
     }
 }
 
@@ -117,6 +123,9 @@
 @media only screen and (max-width: 1070px) {
     .wishlist-section-container-title{
         width:53.5% !important;
+        .color-title{
+            padding-right: 57px !important;
+        }
     }
 }
 

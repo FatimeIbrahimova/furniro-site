@@ -2,11 +2,18 @@ import { combineReducers, createAsyncThunk, createSlice } from "@reduxjs/toolkit
 import axios from "axios"
 import { countryAndProvinceTypes} from "../../types"
 
+const token=localStorage.getItem("token")
 export const fetchCountries=createAsyncThunk(
     "fetchCountry",
     async()=>{
         const res=await axios.get(
-            `http://immutable858-001-site1.atempurl.com/api/Country`
+            `https://immutable858-001-site1.atempurl.com/api/Country`,{
+              headers: {
+                'accept': '*/*',
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                },
+            }
         )
         return res.data
     }
@@ -16,7 +23,13 @@ export const fetchProvinces=createAsyncThunk(
     "fetchProvince",
     async(id:number)=>{
         const res=await axios.get(
-            `http://immutable858-001-site1.atempurl.com/api/Province/GetRelatedProvince/${id}`
+            `https://immutable858-001-site1.atempurl.com/api/Province/GetRelatedProvince/${id}`,{
+              headers: {
+                'accept': '*/*',
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                },
+            }
         )
         return res.data
     }
@@ -40,8 +53,14 @@ export const postCheckout = createAsyncThunk(
     }, {rejectWithValue}) => {
       try {
         const res = await axios.post(
-          "http://immutable858-001-site1.atempurl.com/api/Checkout",
-          values
+          "https://immutable858-001-site1.atempurl.com/api/Checkout",
+          values,{
+            headers: {
+              'accept': '*/*',
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+              },
+          }
         );
         return res.data;
       } catch (error) {

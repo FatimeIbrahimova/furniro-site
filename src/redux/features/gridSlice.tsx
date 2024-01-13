@@ -10,7 +10,7 @@ export const fetchGrid = createAsyncThunk(
 	"data/fetchFrid",
 	async () => {
 		const res = await axios.get(
-			`http://immutable858-001-site1.atempurl.com/api/Home`
+			`https://immutable858-001-site1.atempurl.com/api/Home`
 		);
 		return res.data;
 	}

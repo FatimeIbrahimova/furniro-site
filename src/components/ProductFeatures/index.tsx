@@ -8,6 +8,11 @@ import { RootState } from "../../redux";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { fetchDataDetail, setColorIds } from "../../redux/features/dataSlice";
 import Loading from "../Loading";
+import {
+	fetchWishlist,
+	postWishlist,
+} from "../../redux/features/wishlistSlice";
+import { toast } from "react-toastify";
 
 const ProductFeatures = ({
 	itemId,
@@ -30,6 +35,11 @@ const ProductFeatures = ({
 	const dispatch: ThunkDispatch<{}, void, AnyAction> = useDispatch();
 	const { id } = useParams();
 	const [colorId, setColorId] = useState(data?.colors?.[0]?.id);
+	const wishlistData = useSelector(
+		(state: RootState) => state.wishlist.fetchWishlist.data
+	);
+
+	console.log(wishlistData, "wishdata");
 
 	useEffect(() => {
 		if (itemId) {
@@ -58,59 +68,77 @@ const ProductFeatures = ({
 	};
 
 	const userId = localStorage.getItem("userId");
+	const token=localStorage.getItem("token")
 
 	const handleAddToCart = () => {
-		const cartItem = {
-			productId: id || itemId,
-			colorId: colorId !== undefined ? colorId : data?.colors?.[0]?.id,
-			userId: userId,
-			count: count,
-		};
-
-		dispatch(postCart(cartItem)).then((confirm) => {
-			console.log(confirm);
-			if (confirm.meta.requestStatus === "rejected") {
-				alert(confirm?.payload?.response?.data?.Message);
-				seterror(
-					confirm?.payload?.response?.data?.Message || "An error occurred"
-				);
-			} else if (confirm.meta.requestStatus === "fulfilled") {
-				navigate("/cart");
-				seterror("");
-			}
-		});
+		if(!token){
+			navigate("/login")
+		}else{
+			const cartItem = {
+				productId: id || itemId,
+				colorId: colorId !== undefined ? colorId : data?.colors?.[0]?.id,
+				userId: userId,
+				count: count,
+			};
+	
+			dispatch(postCart(cartItem)).then((confirm) => {
+				console.log(confirm);
+				if (confirm.meta.requestStatus === "rejected") {
+					alert(confirm?.payload?.response?.data?.Message);
+					seterror(
+						confirm?.payload?.response?.data?.Message || "An error occurred"
+					);
+				} else if (confirm.meta.requestStatus === "fulfilled") {
+					toast.success('Product added to card!', {
+						position: "bottom-right",
+						autoClose: 2000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: "light",
+					  });
+					navigate("/cart");
+					seterror("");
+				}
+			});
+			isModal(false);
+		}
+		
 	};
-	const token = localStorage.getItem("token");
 
 	const handleAddWishlist = async () => {
-		const wishlistItem = {
-			productId: itemId,
-			colorId: colorId !== undefined ? colorId : data?.colors?.[0]?.id,
-			userId: Number(userId),
-		};
-		console.log(wishlistItem, "item");
-
-		const response = await fetch(
-			"http://immutable858-001-site1.atempurl.com/api/Favorite",
-			{
-				method: "POST",
-				headers: {
-					accept: "*/*",
-					Authorization: `Bearer ${token}`,
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(wishlistItem),
-			}
-		);
-		if (!response.ok) {
-			throw new Error("Failed to add to favorites");
+		if(!token){
+			navigate("/login")
+		}else{
+			const wishlistItem = {
+				productId: itemId,
+				colorId: colorId !== undefined ? colorId : data?.colors?.[0]?.id,
+				userId: Number(userId),
+			};
+	
+			dispatch(postWishlist(wishlistItem)).then((confirm) => {
+				console.log(confirm);
+				if (confirm.meta.requestStatus === "rejected") {
+					alert(confirm?.payload?.response?.data?.Message);
+				} else if (confirm.meta.requestStatus === "fulfilled") {
+					toast.success("Product added to wishlist!", {
+						position: "bottom-right",
+						autoClose: 2000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: "light",
+					});
+					dispatch(fetchWishlist(userId));
+				}
+			});
+			isModal(false);
 		}
-		isModal(false);
-
-		alert("add favourites");
-		console.log(response);
-
-		return response;
+		
 	};
 
 	console.log(errMsg, "errMsg");
@@ -196,33 +224,33 @@ const ProductFeatures = ({
 						</>
 					)}
 
-					<div className="product-buttons">
-						{card && (
-							<>
-								<div className="count">
-									<span className="decrease-increase" onClick={decreaseCount}>
-										-
-									</span>
-									<span>{count}</span>
-									<span className="decrease-increase" onClick={increaseCount}>
-										+
-									</span>
-								</div>
-								<NavLink to="">
-									<button
-										className="add_cart-btn"
-										onClick={() => handleAddToCart()}
-									>
-										Add To Cart
-									</button>
-								</NavLink>
-							</>
-						)}
-						{like && (
+					{card && (
+						<div className="product-buttons">
+							<div className="count">
+								<span className="decrease-increase" onClick={decreaseCount}>
+									-
+								</span>
+								<span>{count}</span>
+								<span className="decrease-increase" onClick={increaseCount}>
+									+
+								</span>
+							</div>
+							<NavLink to="">
+								<button
+									className="add_cart-btn"
+									onClick={() => handleAddToCart()}
+								>
+									Add To Cart
+								</button>
+							</NavLink>
+						</div>
+					)}
+					{like && (
+						<div className="product-buttons">
 							<button onClick={() => handleAddWishlist()}>Add Wishlist</button>
-						)}
-					</div>
-					{isProductDetailPage && (
+						</div>
+					)}
+					{isProductDetailPage && !card && !like && (
 						<>
 							<h4>Size</h4>
 							<div className="all-sizes">

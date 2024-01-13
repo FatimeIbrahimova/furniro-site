@@ -22,6 +22,8 @@ const Blog: React.FC = () => {
 	//blogs
 	const blog = useSelector((state: RootState) => state.blogPage.blog.data);
 	const status = useSelector((state: RootState) => state.blogPage.blog.status);
+	const statusCategories = useSelector((state: RootState) => state.blogPage.categories.status);
+	const statusPosts = useSelector((state: RootState) => state.blogPage.posts.status);
 	const blogsData = blog[0]?.blogs;
 
 	//recent posts
@@ -112,7 +114,9 @@ const Blog: React.FC = () => {
 					</div>
 					<div className="blog-section-container_rightside">
 						<div className="blog-filter">
-							<div className="blog-filter-search">
+							{statusCategories === "succeeded"&& (
+								<>
+								<div className="blog-filter-search">
 								<input
 									type="text"
 									value={value}
@@ -120,7 +124,7 @@ const Blog: React.FC = () => {
 								/>
 								<img src={SvgSearch} alt="img" className="icon" />
 							</div>
-							<h2>Categories</h2>
+								<h2>Categories</h2>
 							<div className="blog-filter-categories">
 								{categories?.map((category) => (
 									<div
@@ -133,8 +137,12 @@ const Blog: React.FC = () => {
 									</div>
 								))}
 							</div>
+								</>
+							)}
 						</div>
-						<div className="posts">
+						{statusPosts === "succeeded" && (
+							<>
+							<div className="posts">
 							<h2>Recent Posts</h2>
 							<div className="posts-container">
 								{posts?.map((item) => (
@@ -150,10 +158,17 @@ const Blog: React.FC = () => {
 								))}
 							</div>
 						</div>
+							</>
+						)}
 					</div>
 				</div>
-				<Pagination blog={blog} value={value} />
+				{status === "succeeded" && (
+					<Pagination blog={blog} value={value} />
+				)}
 			</div>
+			{status === "failed" && (
+				<div className="blog-section-container">Failed</div>
+			)}
 			<Features />
 		</div>
 	);

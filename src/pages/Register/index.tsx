@@ -10,7 +10,7 @@ import {
 	postRegister,
 } from "../../redux/features/registerSlice";
 import { useState } from "react";
-
+import Swal from "sweetalert2";
 
 const Register: React.FC = () => {
 	const dispatch: ThunkDispatch<{}, void, AnyAction> = useDispatch();
@@ -18,31 +18,30 @@ const Register: React.FC = () => {
 
 	const [errMsg, seterror] = useState("");
 
-	const { handleChange, values, handleSubmit, errors, touched } =
-		useFormik({
-			initialValues: {
-				userName: "",
-				firstName: "",
-				lastName: "",
-				email: "",
-				password: "",
-			},
-			validationSchema: RegisterSchema,
-			onSubmit: (values) => {
-				dispatch(postRegister(values)).then((confirm) => {
-					if (confirm.meta.requestStatus === "rejected") {
-						seterror(
-							confirm?.payload?.response?.data?.Message || "An error occurred"
-						); 
-					} else if (confirm.meta.requestStatus === "fulfilled") {
-						alert("Register Completed")
+	const { handleChange, values, handleSubmit, errors, touched } = useFormik({
+		initialValues: {
+			userName: "",
+			firstName: "",
+			lastName: "",
+			email: "",
+			password: "",
+		},
+		validationSchema: RegisterSchema,
+		onSubmit: (values) => {
+			dispatch(postRegister(values)).then((confirm) => {
+				if (confirm.meta.requestStatus === "rejected") {
+					seterror(
+						confirm?.payload?.response?.data?.Message || "An error occurred"
+					);
+				} else if (confirm.meta.requestStatus === "fulfilled") {
+					Swal.fire("Register Completed!").then(() => {
 						navigate("/login");
-						seterror("");
-					}
-				});
-			},
-		});
-
+					});
+					seterror("");
+				}
+			});
+		},
+	});
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		dispatch(clearRegisterError());
@@ -65,7 +64,7 @@ const Register: React.FC = () => {
 										<div>
 											<input
 												type="text"
-												onChange={(e)=>handleInputChange(e)}
+												onChange={(e) => handleInputChange(e)}
 												value={values.userName}
 												name="userName"
 											/>
@@ -80,7 +79,7 @@ const Register: React.FC = () => {
 										<div>
 											<input
 												type="text"
-												onChange={(e)=>handleInputChange(e)}
+												onChange={(e) => handleInputChange(e)}
 												value={values.firstName}
 												name="firstName"
 											/>
@@ -98,7 +97,7 @@ const Register: React.FC = () => {
 											<input
 												type="text"
 												name="lastName"
-												onChange={(e)=>handleInputChange(e)}
+												onChange={(e) => handleInputChange(e)}
 												value={values.lastName}
 											/>
 											<br />
@@ -112,7 +111,7 @@ const Register: React.FC = () => {
 										<div>
 											<input
 												type="text"
-												onChange={(e)=>handleInputChange(e)}
+												onChange={(e) => handleInputChange(e)}
 												value={values.email}
 												name="email"
 											/>
@@ -129,7 +128,7 @@ const Register: React.FC = () => {
 								<div>
 									<input
 										type="password"
-										onChange={(e)=>handleInputChange(e)}
+										onChange={(e) => handleInputChange(e)}
 										value={values.password}
 										name="password"
 									/>

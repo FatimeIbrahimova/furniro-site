@@ -17,8 +17,14 @@ export const postWishlist = createAsyncThunk(
 	) => {
 		try {
 			const res = await axios.post(
-				"http://immutable858-001-site1.atempurl.com/api/Favorite",
-				values
+				"https://immutable858-001-site1.atempurl.com/api/Favorite",
+				values,{
+					headers: {
+						'accept': '*/*',
+						'Authorization': `Bearer ${token}`,
+						'Content-Type': 'application/json',
+					  },
+				}
 			);
 
 			return res.data;
@@ -33,7 +39,7 @@ export const fetchWishlist = createAsyncThunk(
 	"fetchWishlist",
 	async (userId: number | any) => {
 		const res = await axios.get(
-			`http://immutable858-001-site1.atempurl.com/api/Favorite?UserId=${userId}`,{
+			`https://immutable858-001-site1.atempurl.com/api/Favorite?UserId=${userId}`,{
 				headers: {
 					'accept': '*/*',
 					'Authorization': `Bearer ${token}`,
@@ -55,15 +61,13 @@ export const removeWishlist = createAsyncThunk(
 	) => {
 		try {
 			const res = await axios.delete(
-				"http://immutable858-001-site1.atempurl.com/api/Favorite",
+				"https://immutable858-001-site1.atempurl.com/api/Favorite",
 				{ data: wishlistItem,headers: {
 					'accept': '*/*',
 					'Authorization': `Bearer ${token}`,
 					'Content-Type': 'application/json',
 				  }, }
 			);
-			console.log(res.data);
-
 			return res.data;
 		} catch (error) {
 			return rejectWithValue(error);

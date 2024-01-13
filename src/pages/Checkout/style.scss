@@ -5,8 +5,6 @@
         .checkout-section {
             &-container {
                 padding-top: 50px;
-                // width: 80%;
-                // margin: 0 auto;
                 display: flex;
                 justify-content: space-between;
                 form {
@@ -97,6 +95,9 @@
                                     font-size: 12px;
                                     font-weight: 500;
                                 }
+                                .product-count{
+                                    margin-left: 5px;
+                                }
                             }
                             h3 {
                                 font-size: 16px;
@@ -168,11 +169,6 @@
                                         font-size: 16px;
                                         font-weight: 500;
                                     }
-                                    // .circle-active {
-                                    //     h3{
-                                    //         color: black;
-                                    //     }
-                                    // }
                                     .cash-circle {
                                         width: 14px;
                                         height: 14px;
@@ -180,10 +176,6 @@
                                         background-color: white;
                                         border: 1px solid #9f9f9f;
                                     }
-                                    // .checkbox-active{
-                                    //     border: none;
-                                    //     background-color: #9f9f9f;
-                                    // }
                                     .circle-active {
                                         border: none;
                                         background-color: black;

@@ -57,7 +57,7 @@ const ShopFilter: React.FC<ShopFilterProps> = ({
 		colors && Array.isArray(colors)
 			? colors.map((item) => ({
 					value: item.id,
-					label: item.colorHexCode,
+					label: item.colorHexCode
 			  }))
 			: [];
 

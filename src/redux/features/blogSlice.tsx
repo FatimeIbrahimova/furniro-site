@@ -6,7 +6,7 @@ export const fetchBlog=createAsyncThunk(
     "fetchBlog",
     async({page,count,value,categoryId}:{page:number,count:number,value:string,categoryId?:number | string})=>{
         const res=await axios.get(
-            `http://immutable858-001-site1.atempurl.com/api/Blog?Page=${page}&ShowMore.Take=${count}&Prompt=${value}&CategoryId=${categoryId}`
+            `https://immutable858-001-site1.atempurl.com/api/Blog?Page=${page}&ShowMore.Take=${count}&Prompt=${value}&CategoryId=${categoryId}`
         )
         return res.data
     }
@@ -16,7 +16,7 @@ export const fetchRecentPosts=createAsyncThunk(
   "fetchRecentPosts",
   async()=>{
       const res=await axios.get(
-          `http://immutable858-001-site1.atempurl.com/api/Blog/recent-posts`
+          `https://immutable858-001-site1.atempurl.com/api/Blog/recent-posts`
       )
       return res.data
   }
@@ -26,7 +26,7 @@ export const fetchBlogCategories=createAsyncThunk(
   "fetchCategories",
   async()=>{
       const res=await axios.get(
-          `http://immutable858-001-site1.atempurl.com/api/Blog/blog-categories`
+          `https://immutable858-001-site1.atempurl.com/api/Blog/blog-categories`
       )
       return res.data
   }

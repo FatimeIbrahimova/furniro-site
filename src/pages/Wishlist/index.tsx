@@ -8,20 +8,14 @@ import {
 import { ProductTypes2 } from "../../types";
 import "./style.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { useEffect } from "react";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 
 const Wishlist = () => {
 	const dispatch: ThunkDispatch<{}, void, AnyAction> = useDispatch();
-	const wishlistData = useSelector(
+	const wishlistData:any= useSelector(
 		(state: RootState) => state.wishlist.fetchWishlist.data
-	);
-	const postWishlist = useSelector(
-		(state: RootState) => state.wishlist.postWishlist.data
-	);
-	const removewishlistData = useSelector(
-		(state: RootState) => state.wishlist.deleteWishlist.data
 	);
 
 	const userId = localStorage.getItem("userId");
@@ -34,13 +28,31 @@ const Wishlist = () => {
 		};
 
 		dispatch(removeWishlist(wishlistItem)).then(() => {
-			alert("Ürün wishlistden kaldırıldı.");
+			toast.success('Product removed from the wishlist!', {
+				position: "bottom-right",
+				autoClose: 2000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+			  });
+			dispatch(fetchWishlist(userId));
 		});
 	};
 
 	useEffect(() => {
-		dispatch(fetchWishlist(userId));
-	}, [postWishlist, removewishlistData]);
+		handleRemoveFromWishlist
+	}, []);
+	useEffect(()=>{
+		dispatch(fetchWishlist(userId))
+	},[])
+	const favori = wishlistData?.[0]?.favorites;
+    const likedProductss = favori?.map((item:any) => item) || []; 
+
+    console.log(likedProductss.length);
+
 	
 
 	return (
@@ -48,7 +60,7 @@ const Wishlist = () => {
 			<SameSection title1="Wishlist" title2="Wishlist" />
 			<div className="wishlist-section">
 				<div className="wishlist-section-container">
-					{wishlistData.length === 0 ? (
+					{likedProductss?.length === 0 ? (
 						<div className="no-products-message">
 							<img
 								src="https://cocoa-theme.myshopify.com/cdn/shop/t/5/assets/empty-cart.png?v=124674504766911058681646036893"
@@ -63,13 +75,13 @@ const Wishlist = () => {
 						<>
 							<div className="wishlist-section-container-title">
 								<h1>Product</h1>
-								<h1>Color</h1>
+								<h1 className="color-title">Color</h1>
 								<h1>Price</h1>
 							</div>
 							<div className="liked-products-wrapper">
 								{/* @ts-ignore */}
 								{wishlistData?.[0].favorites?.map((item: any) => (
-									<div className="liked-product" key={item.id}>
+									<div className="liked-product" key={item.productId}>
 										<div className="liked-product_leftside">
 											<i
 												className="fa-solid fa-x"
