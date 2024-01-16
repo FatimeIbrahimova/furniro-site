@@ -91,6 +91,11 @@
                     align-items: center;
                     gap: 15px;
                     margin-top: 10px;
+                    .stars{
+                        display: flex;
+                        align-items: center;
+                        gap:5px !important;
+                    }
                     .line {
                         background-color: #9f9f9f;
                         width: 1px;

@@ -14,7 +14,7 @@ import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 
 const Wishlist = () => {
 	const dispatch: ThunkDispatch<{}, void, AnyAction> = useDispatch();
-	const wishlistData:any= useSelector(
+	const wishlistData: any = useSelector(
 		(state: RootState) => state.wishlist.fetchWishlist.data
 	);
 
@@ -28,7 +28,7 @@ const Wishlist = () => {
 		};
 
 		dispatch(removeWishlist(wishlistItem)).then(() => {
-			toast.success('Product removed from the wishlist!', {
+			toast.success("Product removed from the wishlist!", {
 				position: "bottom-right",
 				autoClose: 2000,
 				hideProgressBar: false,
@@ -37,23 +37,19 @@ const Wishlist = () => {
 				draggable: true,
 				progress: undefined,
 				theme: "light",
-			  });
+			});
 			dispatch(fetchWishlist(userId));
 		});
 	};
 
 	useEffect(() => {
-		handleRemoveFromWishlist
+		handleRemoveFromWishlist;
 	}, []);
-	useEffect(()=>{
-		dispatch(fetchWishlist(userId))
-	},[])
+	useEffect(() => {
+		dispatch(fetchWishlist(userId));
+	}, []);
 	const favori = wishlistData?.[0]?.favorites;
-    const likedProductss = favori?.map((item:any) => item) || []; 
-
-    console.log(likedProductss.length);
-
-	
+	const likedProductss = favori?.map((item: any) => item) || [];
 
 	return (
 		<div className="wishlist">

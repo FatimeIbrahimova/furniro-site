@@ -15,7 +15,7 @@ import { CheckoutSchema } from "../../schema/FormSchema";
 import Swal from "sweetalert2";
 import { CartItem } from "../../types";
 import { clearCart, fetchCart } from "../../redux/features/cartSlice";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
 	const [orderInfo, setOrderInfo] = useState<boolean>(false);
@@ -25,7 +25,7 @@ const Checkout = () => {
 	const [cashInfo, setCashInfo] = useState<boolean>(false);
 	const [cashCircle, setCashCircle] = useState<boolean>(false);
 	const dispatch: ThunkDispatch<{}, void, AnyAction> = useDispatch();
-	const navigate=useNavigate()
+	const navigate = useNavigate();
 	const countries = useSelector(
 		(state: RootState) => state.checkoutPage.country.data
 	);
@@ -35,8 +35,6 @@ const Checkout = () => {
 	const fetchCartitems: any = useSelector(
 		(state: RootState) => state.cart.fetchCart.data
 	);
-
-	console.log(fetchCartitems);
 
 	const id = countries?.[0]?.id;
 	const provinceId = provinces?.[0]?.id;
@@ -141,10 +139,10 @@ const Checkout = () => {
 					);
 					alert(confirm?.payload?.response?.data?.Message || errMsg);
 				} else if (confirm.meta.requestStatus === "fulfilled") {
-					Swal.fire("Checkout Completed!").then(()=>{
-						dispatch(clearCart(userId))
+					Swal.fire("Checkout Completed!").then(() => {
+						dispatch(clearCart(userId));
 						dispatch(fetchCart(userId));
-						navigate("/")
+						navigate("/");
 					});
 					seterror("");
 					resetForm();
@@ -361,7 +359,7 @@ const Checkout = () => {
 											))
 										)}
 									</h3>
-									<div style={{display:"flex",flexDirection:"column"}}>
+									<div style={{ display: "flex", flexDirection: "column" }}>
 										{fetchCartitems?.map((item: any) =>
 											item?.cartItems?.map((item: any) => (
 												<span key={item.id}>
@@ -393,7 +391,8 @@ const Checkout = () => {
 														(acc: any, subtotal: any) =>
 															acc! + parseFloat(subtotal?.toString() ?? "0"),
 														0
-													).toFixed(4)}
+													)
+													.toFixed(4)}
 											</span>
 										</span>
 									</div>
@@ -420,7 +419,8 @@ const Checkout = () => {
 														(acc: any, subtotal: any) =>
 															acc! + parseFloat(subtotal?.toString() ?? "0"),
 														0
-													).toFixed(4)}
+													)
+													.toFixed(4)}
 											</span>
 										</span>
 									</div>

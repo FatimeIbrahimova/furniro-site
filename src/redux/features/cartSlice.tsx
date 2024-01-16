@@ -6,14 +6,14 @@ import {
 } from "@reduxjs/toolkit";
 import { ProductTypes } from "../../types";
 import axios from "axios";
-const token=localStorage.getItem("token")
+const token = localStorage.getItem("token");
 export const postCart = createAsyncThunk(
 	"postCart",
 	async (
 		values: {
 			productId: string | undefined;
 			colorId: number | undefined;
-			userId:string | null;
+			userId: string | null;
 			count: number;
 		},
 		{ rejectWithValue }
@@ -21,12 +21,13 @@ export const postCart = createAsyncThunk(
 		try {
 			const res = await axios.post(
 				"https://immutable858-001-site1.atempurl.com/api/Cart/addToCart",
-				values,{
+				values,
+				{
 					headers: {
-						'accept': '*/*',
-						'Authorization': `Bearer ${token}`,
-						'Content-Type': 'application/json',
-					  },
+						accept: "*/*",
+						Authorization: `Bearer ${token}`,
+						"Content-Type": "application/json",
+					},
 				}
 			);
 
@@ -41,12 +42,13 @@ export const fetchCart = createAsyncThunk(
 	"fetchCart",
 	async (userId: number | any) => {
 		const res = await axios.get(
-			`https://immutable858-001-site1.atempurl.com/api/Cart/getAllCartItems/${userId}`,{
+			`https://immutable858-001-site1.atempurl.com/api/Cart/getAllCartItems/${userId}`,
+			{
 				headers: {
-					'accept': '*/*',
-					'Authorization': `Bearer ${token}`,
-					'Content-Type': 'application/json',
-				  },
+					accept: "*/*",
+					Authorization: `Bearer ${token}`,
+					"Content-Type": "application/json",
+				},
 			}
 		);
 		return res.data;
@@ -62,14 +64,16 @@ export const removeCart = createAsyncThunk(
 		try {
 			const res = await axios.delete(
 				"https://immutable858-001-site1.atempurl.com/api/Cart/remove",
-				{ data: cartItem ,headers: {
-					'accept': '*/*',
-					'Authorization': `Bearer ${token}`,
-					'Content-Type': 'application/json',
-				  },}
+				{
+					data: cartItem,
+					headers: {
+						accept: "*/*",
+						Authorization: `Bearer ${token}`,
+						"Content-Type": "application/json",
+					},
+				}
 			);
-			console.log(res.data);
-			
+
 			return res.data;
 		} catch (error) {
 			return rejectWithValue(error);
@@ -83,9 +87,8 @@ export const clearCart = createAsyncThunk(
 		try {
 			const res = await axios.post(
 				"https://immutable858-001-site1.atempurl.com/api/Cart/ClearCart",
-				{ appUserId: userId } 
+				{ appUserId: userId }
 			);
-			console.log(res.data);
 
 			return res.data;
 		} catch (error) {
@@ -109,18 +112,16 @@ const initialState: CartState = {
 };
 
 interface CartState1 {
-	data: {message:any};
+	data: { message: any };
 	status: string;
 	error: null | undefined | string;
 }
 
 const initialState1: CartState1 = {
-	data: {message:""},
+	data: { message: "" },
 	status: "idle",
 	error: null,
 };
-
-
 
 export const cartSlice = createSlice({
 	name: "cart",
@@ -179,7 +180,6 @@ export const cartSlice = createSlice({
 				state.status = "loading";
 			})
 			.addCase(postCart.fulfilled, (state, action) => {
-				// console.log("Fulfilled action payload:", action.payload);
 				state.status = "succeeded";
 				state.data = action.payload;
 			})
@@ -200,7 +200,6 @@ export const fetchCartSlice = createSlice({
 				state.status = "loading";
 			})
 			.addCase(fetchCart.fulfilled, (state, action) => {
-				// console.log("Fulfilled action payload:", action.payload);
 				state.status = "succeeded";
 				state.data = action.payload;
 			})
@@ -241,7 +240,6 @@ export const clearAllCartSlice = createSlice({
 				state.status = "loading";
 			})
 			.addCase(clearCart.fulfilled, (state, action) => {
-				// console.log("Fulfilled action payload:", action.payload);
 				state.status = "succeeded";
 				state.data = action.payload;
 			})

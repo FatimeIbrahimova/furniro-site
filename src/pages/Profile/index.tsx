@@ -36,6 +36,7 @@ const Profile = () => {
 		localStorage.removeItem("userId")
 		alert("User Deleted Successfully");
 		navigate("/");
+		navigate(0)
 	};
 
 	const [state, setState] = useState({
@@ -100,7 +101,6 @@ const Profile = () => {
 			onSubmit: (values: any) => {
 				dispatch(resetPassword(values)).then((confirm) => {
 					if (confirm.meta.requestStatus === "rejected") {
-						console.log("Confirm: ", confirm);
 						seterror(
 							confirm?.payload?.response?.data?.Message || "An error occurred"
 						);

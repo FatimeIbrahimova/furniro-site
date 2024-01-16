@@ -5,7 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const token=localStorage.getItem("token")
+const token = localStorage.getItem("token");
 export const fetchProfile = createAsyncThunk(
 	"fetchProfile",
 	async (id: string | null) => {
@@ -23,18 +23,17 @@ export const deleteProfile = createAsyncThunk(
 		try {
 			const res = await axios.put(
 				"https://immutable858-001-site1.atempurl.com/api/ApplicationUser/DeleteUser",
-				userName,{
+				userName,
+				{
 					headers: {
-						'accept': '*/*',
-						'Authorization': `Bearer ${token}`,
-						'Content-Type': 'application/json',
-					  },
+						accept: "*/*",
+						Authorization: `Bearer ${token}`,
+						"Content-Type": "application/json",
+					},
 				}
 			);
-			console.log(res.data);
 
 			return res.data;
-			
 		} catch (error) {
 			return rejectWithValue(error);
 		}
@@ -47,17 +46,17 @@ export const updateProfile = createAsyncThunk(
 		try {
 			const res = await axios.put(
 				"https://immutable858-001-site1.atempurl.com/api/ApplicationUser/UpdateUser",
-				state,{
+				state,
+				{
 					headers: {
-						'accept': '*/*',
-						'Authorization': `Bearer ${token}`,
-						'Content-Type': 'application/json',
-					  },
+						accept: "*/*",
+						Authorization: `Bearer ${token}`,
+						"Content-Type": "application/json",
+					},
 				}
 			);
 			return res.data;
 		} catch (error) {
-			console.error(error);
 			throw error;
 		}
 	}
@@ -69,15 +68,15 @@ export const resetPassword = createAsyncThunk(
 		try {
 			const res = await axios.put(
 				"https://immutable858-001-site1.atempurl.com/api/ApplicationUser/ChangePassword",
-				statePassword,{
+				statePassword,
+				{
 					headers: {
-						'accept': '*/*',
-						'Authorization': `Bearer ${token}`,
-						'Content-Type': 'application/json',
-					  },
+						accept: "*/*",
+						Authorization: `Bearer ${token}`,
+						"Content-Type": "application/json",
+					},
 				}
 			);
-			console.log(res.data);
 
 			return res.data;
 		} catch (error) {
@@ -94,7 +93,7 @@ interface profileState {
 		lastName: string;
 		id: number | string;
 		isSuccess: boolean;
-		message:string
+		message: string;
 	};
 	status: string;
 	error: null | undefined | string;
@@ -107,8 +106,8 @@ const initialState: profileState = {
 		userName: "",
 		lastName: "",
 		id: "",
-		isSuccess:false,
-		message:""
+		isSuccess: false,
+		message: "",
 	},
 	status: "idle",
 	error: null,
@@ -124,7 +123,6 @@ export const profileSlice = createSlice({
 				state.status = "loading";
 			})
 			.addCase(fetchProfile.fulfilled, (state, action) => {
-				// console.log("Fulfilled action payload:", action.payload);
 				state.status = "succeeded";
 				state.data = action.payload;
 			})
@@ -145,7 +143,6 @@ export const deleteProfileSlice = createSlice({
 				state.status = "loading";
 			})
 			.addCase(deleteProfile.fulfilled, (state, action) => {
-				// console.log("Fulfilled action payload:", action.payload);
 				state.status = "succeeded";
 				state.data = action.payload;
 			})
@@ -166,7 +163,6 @@ export const updateProfileSlice = createSlice({
 				state.status = "loading";
 			})
 			.addCase(updateProfile.fulfilled, (state, action) => {
-				// console.log("Fulfilled action payload:", action.payload);
 				state.status = "succeeded";
 				state.data = action.payload;
 			})

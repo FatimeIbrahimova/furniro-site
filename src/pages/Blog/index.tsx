@@ -17,6 +17,7 @@ import {
 } from "../../redux/features/blogSlice";
 import Loading from "../../components/Loading";
 
+
 const Blog: React.FC = () => {
 	const dispatch: ThunkDispatch<{}, void, AnyAction> = useDispatch();
 	//blogs
@@ -25,7 +26,7 @@ const Blog: React.FC = () => {
 	const statusCategories = useSelector((state: RootState) => state.blogPage.categories.status);
 	const statusPosts = useSelector((state: RootState) => state.blogPage.posts.status);
 	const blogsData = blog[0]?.blogs;
-
+	
 	//recent posts
 	const posts = useSelector((state: RootState) => state.blogPage.posts.data);
 	//categories
@@ -34,6 +35,8 @@ const Blog: React.FC = () => {
 	);
 
 	const [value, setValue] = useState("");
+	const [categoryId, setCategoryId] = useState<number | undefined>(undefined);
+
 
 	useEffect(() => {
 		dispatch(fetchRecentPosts());
@@ -53,6 +56,7 @@ const Blog: React.FC = () => {
 	}, [value, dispatch]);
 
 	const handleCategoryClick = (categoryId: number) => {
+		setCategoryId(categoryId)
 		dispatch(
 			fetchBlog({ page: 1, count: 3, value: "", categoryId: categoryId })
 		);
@@ -65,6 +69,7 @@ const Blog: React.FC = () => {
 			behavior: "smooth",
 		});
 	}, []);
+	
 	return (
 		<div className="blog-page">
 			<SameSection title1="Blog" title2="Blog" />
@@ -87,7 +92,7 @@ const Blog: React.FC = () => {
 						{blogsData?.map((item) => (
 							<div className="blog" key={item.id}>
 								<div className="blog-img">
-									<img src={item.imageUrls} alt="img" loading="lazy" />
+									<img src={item.imageUrls} alt="img"/>
 								</div>
 								<div className="blog-infos">
 									<div className="info">
@@ -148,7 +153,7 @@ const Blog: React.FC = () => {
 								{posts?.map((item) => (
 									<div className="post" key={item.id}>
 										<div className="post-img">
-											<img src={item.imageUrls} alt="img" loading="lazy" />
+											<img src={item.imageUrls?.[0]} alt="img" loading="lazy" />
 										</div>
 										<div className="post-info">
 											<h3>{item.header}</h3>
@@ -162,9 +167,9 @@ const Blog: React.FC = () => {
 						)}
 					</div>
 				</div>
-				{status === "succeeded" && (
-					<Pagination blog={blog} value={value} />
-				)}
+				
+					<Pagination  blog={blog} value={value} categoryId={categoryId}/>
+			
 			</div>
 			{status === "failed" && (
 				<div className="blog-section-container">Failed</div>

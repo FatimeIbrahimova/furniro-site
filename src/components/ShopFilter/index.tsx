@@ -20,11 +20,13 @@ interface ShopFilterProps {
 	isFilterVisible: boolean;
 	selectedTitle: string;
 	filterNumber: number;
+	resetFilterNumber: () => void;
 }
 const ShopFilter: React.FC<ShopFilterProps> = ({
 	isFilterVisible,
 	selectedTitle,
 	filterNumber,
+	resetFilterNumber,
 }) => {
 	const categories = useSelector(
 		(state: RootState) => state.filterFeatures.categories.data
@@ -57,7 +59,7 @@ const ShopFilter: React.FC<ShopFilterProps> = ({
 		colors && Array.isArray(colors)
 			? colors.map((item) => ({
 					value: item.id,
-					label: item.colorHexCode
+					label: item.colorHexCode,
 			  }))
 			: [];
 
@@ -104,21 +106,22 @@ const ShopFilter: React.FC<ShopFilterProps> = ({
 		dispatch(fetchSizes());
 		dispatch(fetchColors());
 	}, []);
+
 	const handleCategoryChange = (selectedOptions: any) => {
 		setSelectedCategories(selectedOptions);
 	};
-	
+
 	const handleTagsChange = (selectedOptions: any) => {
 		setSelectedTags(selectedOptions);
 	};
-	
+
 	const handleSizesChange = (selectedOptions: any) => {
 		setSelectedSizes(selectedOptions);
 	};
 	const handleColorsChange = (selectedOptions: any) => {
 		setSelectedColors(selectedOptions);
 	};
-	
+
 	const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value;
 		setSelectedMinPrice(parseInt(inputValue));
@@ -131,6 +134,23 @@ const ShopFilter: React.FC<ShopFilterProps> = ({
 	const handleNewCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setNewChecked(e.target.checked);
 	};
+
+	useEffect(() => {
+		if (
+			selectedCategories.length === 0 &&
+			selectedTags.length === 0 &&
+			selectedSizes.length === 0 &&
+			selectedColors.length === 0
+		) {
+			resetFilterNumber();
+		}
+	}, [
+		selectedCategories,
+		selectedTags,
+		selectedSizes,
+		selectedColors,
+		resetFilterNumber,
+	]);
 
 	return (
 		<div className={`filter ${isFilterVisible ? "filter-visible" : ""}`}>

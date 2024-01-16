@@ -76,6 +76,7 @@ const AboutProduct = () => {
 				} else if (confirm.meta.requestStatus === "fulfilled") {
 					Swal.fire("Comment Completed");
 					resetForm();
+					setRate(1);
 				}
 			});
 		},
@@ -139,6 +140,7 @@ const AboutProduct = () => {
 		}
 		return stars;
 	};
+	
 
 	return (
 		<div className="about-product">
@@ -214,16 +216,18 @@ const AboutProduct = () => {
 												<p>{item.text}</p>
 												<div className="rate">{item.rate}</div>
 											</div>
-											<div className="delete-btn">
-												<button
-													onClick={() =>
-														handleDelete(item.id, item.userProfile.payload.id)
-													}
-													type="button"
-												>
-													Delete
-												</button>
-											</div>
+											{item.appUserId == userId && (
+												<div className="delete-btn">
+													<button
+														onClick={() =>
+															handleDelete(item.id, item.userProfile.payload.id)
+														}
+														type="button"
+													>
+														Delete
+													</button>
+												</div>
+											)}
 										</div>
 									))}
 								</div>

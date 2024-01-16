@@ -4,19 +4,18 @@ import Svg1 from "../../images/system-uicons_filtering.svg";
 import Svg2 from "../../images/ci_grid-big-round.svg";
 import Svg3 from "../../images/bi_view-list.svg";
 import Features from "../../components/Features";
-import ProductCard from "../../components/ProductCard";
 import { useEffect, useState } from "react";
 import Pagination from "../../components/Pagination";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
-import ShopFilter from "../../components/ShopFilter";
+import { ProductCard, ShopFilter } from "../../components";
 
 const Shop = () => {
 	const data = useSelector((state: RootState) => state.data.dataShop.data);
 	const dataProductsLength = data?.map((item) => item?.products?.length);
 
 	const [selectedTitle, setSelectedTitle] = useState<any>("");
-	const [filterNumber, setFilterNumber] = useState<number>(16);
+	const [filterNumber, setFilterNumber] = useState<number>(12);
 
 	const handleTitleChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
 		const selectedValue = e.target.value;
@@ -26,7 +25,6 @@ const Shop = () => {
 	useEffect(() => {
 		const productsLength = data?.[0]?.products?.length;
 		const totalProductCount = data?.[0]?.totalProductCount;
-
 		if (productsLength !== undefined && totalProductCount !== undefined) {
 			setFilterNumber(productsLength);
 		}
@@ -61,6 +59,10 @@ const Shop = () => {
 
 	const handleFilterClick = () => {
 		setIsFilterVisible(!isFilterVisible);
+	};
+
+	const handleResetFilterNumber = () => {
+		setFilterNumber(12);
 	};
 
 	return (
@@ -107,6 +109,7 @@ const Shop = () => {
 				isFilterVisible={isFilterVisible}
 				selectedTitle={selectedTitle}
 				filterNumber={filterNumber}
+				resetFilterNumber={handleResetFilterNumber}
 			/>
 			<ProductCard />
 			<Pagination />

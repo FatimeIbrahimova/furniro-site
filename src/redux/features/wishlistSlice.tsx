@@ -1,9 +1,13 @@
-import { combineReducers, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ProductTypes } from '../../types'
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
-
+import {
+	combineReducers,
+	createAsyncThunk,
+	createSlice,
+	PayloadAction,
+} from "@reduxjs/toolkit";
+import { ProductTypes } from "../../types";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 export const postWishlist = createAsyncThunk(
 	"postWishlist",
@@ -11,44 +15,43 @@ export const postWishlist = createAsyncThunk(
 		values: {
 			productId: string | undefined;
 			colorId: number | undefined;
-			userId:number | null;
+			userId: number | null;
 		},
 		{ rejectWithValue }
 	) => {
 		try {
 			const res = await axios.post(
 				"https://immutable858-001-site1.atempurl.com/api/Favorite",
-				values,{
+				values,
+				{
 					headers: {
-						'accept': '*/*',
-						'Authorization': `Bearer ${token}`,
-						'Content-Type': 'application/json',
-					  },
+						accept: "*/*",
+						Authorization: `Bearer ${token}`,
+						"Content-Type": "application/json",
+					},
 				}
 			);
 
 			return res.data;
 		} catch (error) {
-			console.log(error);
 			return rejectWithValue(error);
 		}
 	}
 );
-const token=localStorage.getItem("token")
+const token = localStorage.getItem("token");
 export const fetchWishlist = createAsyncThunk(
 	"fetchWishlist",
 	async (userId: number | any) => {
 		const res = await axios.get(
-			`https://immutable858-001-site1.atempurl.com/api/Favorite?UserId=${userId}`,{
+			`https://immutable858-001-site1.atempurl.com/api/Favorite?UserId=${userId}`,
+			{
 				headers: {
-					'accept': '*/*',
-					'Authorization': `Bearer ${token}`,
-					'Content-Type': 'application/json',
-				  },
+					accept: "*/*",
+					Authorization: `Bearer ${token}`,
+					"Content-Type": "application/json",
+				},
 			}
 		);
-		console.log(res.data);
-
 		return res.data;
 	}
 );
@@ -62,11 +65,14 @@ export const removeWishlist = createAsyncThunk(
 		try {
 			const res = await axios.delete(
 				"https://immutable858-001-site1.atempurl.com/api/Favorite",
-				{ data: wishlistItem,headers: {
-					'accept': '*/*',
-					'Authorization': `Bearer ${token}`,
-					'Content-Type': 'application/json',
-				  }, }
+				{
+					data: wishlistItem,
+					headers: {
+						accept: "*/*",
+						Authorization: `Bearer ${token}`,
+						"Content-Type": "application/json",
+					},
+				}
 			);
 			return res.data;
 		} catch (error) {
@@ -75,53 +81,56 @@ export const removeWishlist = createAsyncThunk(
 	}
 );
 
-
 interface WishlistState {
-    likedProducts: ProductTypes[];
-    data: [];
+	likedProducts: ProductTypes[];
+	data: [];
 	status: string;
 	error: null | undefined | string;
-  }
-  
-  const initialState: WishlistState = {
-    likedProducts: [],
-    data: [],
+}
+
+const initialState: WishlistState = {
+	likedProducts: [],
+	data: [],
 	status: "idle",
 	error: null,
-  };
+};
 
+export const wishlistSlice = createSlice({
+	name: "wishlist",
+	initialState,
+	reducers: {
+		toggleLike: (state, action: PayloadAction<ProductTypes>) => {
+			const likedProduct = action.payload;
 
-export const wishlistSlice= createSlice({
-   name:"wishlist",
-   initialState,
-   reducers: {
-    toggleLike: (state, action: PayloadAction<ProductTypes>) => {
-        const likedProduct = action.payload;
-  
-        const isLiked = state.likedProducts.some((product) => product.id === likedProduct.id);
-  
-        if (isLiked) {
-          state.likedProducts = state.likedProducts.filter((product) => product.id !== likedProduct.id);
-        } else {
-          state.likedProducts = [...state.likedProducts, likedProduct];
-        }
-      },
-      removeFromWishlist: (state, action: PayloadAction<ProductTypes>) => {
-        toast.error('Product removed from wishlist!', {
-          position: "bottom-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        state.likedProducts = state.likedProducts.filter(item => item.id !== action.payload);
+			const isLiked = state.likedProducts.some(
+				(product) => product.id === likedProduct.id
+			);
 
-      },
-   },
-   extraReducers: (builder) => {
+			if (isLiked) {
+				state.likedProducts = state.likedProducts.filter(
+					(product) => product.id !== likedProduct.id
+				);
+			} else {
+				state.likedProducts = [...state.likedProducts, likedProduct];
+			}
+		},
+		removeFromWishlist: (state, action: PayloadAction<ProductTypes>) => {
+			toast.error("Product removed from wishlist!", {
+				position: "bottom-right",
+				autoClose: 2000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+			});
+			state.likedProducts = state.likedProducts.filter(
+				(item) => item.id !== action.payload
+			);
+		},
+	},
+	extraReducers: (builder) => {
 		builder
 			.addCase(postWishlist.pending, (state) => {
 				state.status = "loading";
@@ -135,7 +144,7 @@ export const wishlistSlice= createSlice({
 				state.error = action.error.message;
 			});
 	},
-})
+});
 
 export const fetchWishlistSlice = createSlice({
 	name: "fetchWishlist",
@@ -179,10 +188,10 @@ export const deleteWishlistSlice = createSlice({
 
 const rootWishlistReducer = combineReducers({
 	postWishlist: wishlistSlice.reducer,
-  fetchWishlist:fetchWishlistSlice.reducer,
-  deleteWishlist:deleteWishlistSlice.reducer
+	fetchWishlist: fetchWishlistSlice.reducer,
+	deleteWishlist: deleteWishlistSlice.reducer,
 });
 
 export default rootWishlistReducer;
 
-export const { toggleLike,removeFromWishlist} = wishlistSlice.actions;
+export const { toggleLike, removeFromWishlist } = wishlistSlice.actions;

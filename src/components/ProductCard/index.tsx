@@ -52,7 +52,7 @@ const ProductCard: React.FC<ProductTypes> = () => {
 
 	useEffect(() => {
 		dispatch(fetchData(8));
-		dispatch(fetchDataShop({ page: 1, count: 16 }));
+		dispatch(fetchDataShop({ page: 1, count: 12 }));
 	}, [dispatch]);
 
 	useEffect(() => {
@@ -138,7 +138,7 @@ const ProductCard: React.FC<ProductTypes> = () => {
 		setAddCard(true);
 		setLikeClicked(false);
 	};
-	console.log(wishlistData,"liked");
+
 	const favori = wishlistData?.[0]?.favorites;
     const likedProductss = favori?.map((item:any) => item) || []; 
 	

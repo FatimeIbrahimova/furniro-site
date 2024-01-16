@@ -13,8 +13,6 @@ export const postLogin = createAsyncThunk(
           values
         );
   
-        console.log("Response Data:", res.data);
-  
         return res.data;
       } catch (error) {
         return rejectWithValue(error)

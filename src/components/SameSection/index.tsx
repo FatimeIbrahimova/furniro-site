@@ -13,7 +13,7 @@ const SameSection = ({ title1, title2 }: Props) => {
 	return (
 		<div className="same-section">
 			<div className="same-section_content">
-				<img src={LogoSvg} alt="logo" className="logo" loading="lazy"/>
+				<img src={LogoSvg} alt="logo" className="logo" loading="lazy" />
 				<h1>{title1}</h1>
 				<div className="same-section_content-links">
 					{isSearchPage ? (
@@ -24,7 +24,7 @@ const SameSection = ({ title1, title2 }: Props) => {
 					) : (
 						<>
 							<NavLink to="/">Home</NavLink>
-							<img src={SvgRight} alt="svg" loading="lazy"/>
+							<img src={SvgRight} alt="svg" loading="lazy" />
 							<h2>{title2}</h2>
 						</>
 					)}

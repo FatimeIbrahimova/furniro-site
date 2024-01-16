@@ -5,7 +5,6 @@ import StarSvg from "../../images/dashicons_star-filled.svg";
 import { useState } from "react";
 import AboutProduct from "./AboutProduct";
 import { ProductTypes } from "../../types";
-// import ProductCard from "../../components/ProductCard";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux";
@@ -15,6 +14,8 @@ import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { fetchDataDetail } from "../../redux/features/dataSlice";
 import Loading from "../../components/Loading";
 import ProductCard from "../../components/ProductCard";
+import { fetchReview } from "../../redux/features/reviewSlice";
+import EmptyStar from "../../images/starempty.svg";
 
 const ProductDetails: React.FC<ProductTypes> = () => {
 	const { id } = useParams();
@@ -52,6 +53,7 @@ const ProductDetails: React.FC<ProductTypes> = () => {
 	useEffect(() => {
 		setSelectedProductImage(reng?.[0]?.imageFiles[0]);
 	}, [data]);
+
 	const handleColorChange = (newColorId: number) => {
 		const newProductImage = data?.colors?.find((item) => item.id == newColorId)
 			?.imageFiles[0];
@@ -66,13 +68,45 @@ const ProductDetails: React.FC<ProductTypes> = () => {
 		});
 	}, []);
 
+	// useEffect(() => {
+	// 	console.log(
+	// 		"Updated 'selectedProductImage' valueeeeeee:",
+	// 		selectedProductImage
+	// 	);
+	// }, [selectedProductImage]);
 	useEffect(() => {
-		console.log(
-			"Updated 'selectedProductImage' valueeeeeee:",
-			selectedProductImage
-		);
-	}, [selectedProductImage]);
+		dispatch(fetchReview({ productId: id, count: 100 }));
+	}, []);
 
+	const [rating, setRating] = useState(0);
+	useEffect(() => {
+		if (
+			Array.isArray(reviews.productReviews) &&
+			reviews.productReviews.length > 0
+		) {
+			const totalRating = reviews.productReviews.reduce(
+				(sum: any, review: any) => sum + review.rate,
+				0
+			);
+			const averageRating = totalRating / reviews.productReviews.length;
+			setRating(averageRating);
+		}
+	}, [reviews]);
+
+	const AverageRatingStars = ({ rating }: any) => {
+		const roundedRating = Math.round(rating * 2) / 2;
+
+		const starElements = Array.from({ length: 5 }, (_, index) => (
+			<img
+				key={index}
+				src={index + 1 <= roundedRating ? StarSvg : EmptyStar}
+				alt="img"
+				className="stars-img"
+			/>
+		));
+
+		return <div className="stars">{starElements}</div>;
+	};
 	return (
 		<>
 			<div className="detail-page">
@@ -126,11 +160,7 @@ const ProductDetails: React.FC<ProductTypes> = () => {
 									</span>
 									<div className="review">
 										<div className="stars">
-											<img src={StarSvg} alt="img" />
-											<img src={StarSvg} alt="img" />
-											<img src={StarSvg} alt="img" />
-											<img src={StarSvg} alt="img" />
-											<img src={StarSvg} alt="img" />
+											<AverageRatingStars rating={rating} />
 										</div>
 										<div className="line"></div>
 										<span>{reviews.totalReviewCount} Customer Review</span>

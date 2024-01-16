@@ -31,8 +31,6 @@ const Cart: React.FC = () => {
 		(state: RootState) => state.cart.fetchCart.data
 	);
 
-	console.log(fetchCartitems);
-	
 
 	useEffect(() => {
 		dispatch(fetchCart(userId));
@@ -67,7 +65,6 @@ const Cart: React.FC = () => {
 			});
 		});
 	};
-    console.log(clearAlldata);
 	
 	const handleClearAll = () => {
 		Swal.fire({
@@ -78,7 +75,6 @@ const Cart: React.FC = () => {
 		});
 		dispatch(clearCart(userId))
 	};
-console.log(fetchCartitems);
 
 	return (
 		<div className="cart-page">

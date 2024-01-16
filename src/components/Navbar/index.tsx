@@ -12,6 +12,7 @@ import { RootState } from "../../redux";
 import Search from "../Search";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { fetchCart } from "../../redux/features/cartSlice";
+import { fetchWishlist } from "../../redux/features/wishlistSlice";
 
 const Navbar = () => {
 	const [menuVisibilty, setMenuVisibilty] = useState("");
@@ -29,6 +30,7 @@ const Navbar = () => {
 	);
 	useEffect(() => {
 		dispatch(fetchCart(userId));
+		dispatch(fetchWishlist(userId));
 	}, []);
 	const handleClick = () => {
 		setMenuVisibilty("visible-menu");
@@ -57,8 +59,7 @@ const Navbar = () => {
 		setInputClass("input visible");
 	};
 
-	const token=localStorage.getItem("token")
-
+	const token = localStorage.getItem("token");
 
 	return (
 		<>
@@ -113,17 +114,18 @@ const Navbar = () => {
 									<img src={SvgIcon3} alt="icon" />
 								</NavLink>
 
-								{wishlistData?.map((item: any,index:number) => (
-									item?.favorites.length > 0 && (
-										<span className="basket_wishlist-count" key={index}>
-										{item?.favorites.length < 9 ? (
-											item?.favorites.length 
-										):(
-											<span>9+</span>
-										)}
-									</span>
-									)
-								))}
+								{wishlistData?.map(
+									(item: any, index: number) =>
+										item?.favorites.length > 0 && (
+											<span className="basket_wishlist-count" key={index}>
+												{item?.favorites.length < 9 ? (
+													item?.favorites.length
+												) : (
+													<span>9+</span>
+												)}
+											</span>
+										)
+								)}
 							</li>
 							<li onClick={openSidebar} className="basket_wishlist">
 								<img src={SvgIcon4} alt="icon" loading="lazy" />
@@ -155,25 +157,53 @@ const Navbar = () => {
 							</li>
 						</ul>
 						<ul className="icons">
-							<li onClick={handleClose}>
+							{token ? (
+								<li>
+									<NavLink to="/profile">
+										<i className="fa-regular fa-user"></i>
+									</NavLink>
+								</li>
+							) : (
+								<li>
+									<NavLink to="/login">
+										<img src={SvgIcon1} alt="icon" />
+									</NavLink>
+								</li>
+							)}
+							<li>
 								<NavLink to="#">
-									<img src={SvgIcon1} alt="icon" />
+									<img
+										src={SvgIcon2}
+										alt="icon"
+										onClick={() => handleSearch()}
+									/>
 								</NavLink>
 							</li>
-							<li onClick={handleClose}>
-								<NavLink to="#">
-									<img src={SvgIcon2} alt="icon" />
-								</NavLink>
-							</li>
-							<li onClick={handleClose}>
+							<li className="basket_wishlist">
 								<NavLink to="/wishlist">
 									<img src={SvgIcon3} alt="icon" />
 								</NavLink>
+
+								{wishlistData?.map(
+									(item: any, index: number) =>
+										item?.favorites.length > 0 && (
+											<span className="basket_wishlist-count" key={index}>
+												{item?.favorites.length < 9 ? (
+													item?.favorites.length
+												) : (
+													<span>9+</span>
+												)}
+											</span>
+										)
+								)}
 							</li>
-							<li onClick={openSidebar}>
-								<NavLink to="/#">
-									<img src={SvgIcon4} alt="icon" />
-								</NavLink>
+							<li onClick={openSidebar} className="basket_wishlist">
+								<img src={SvgIcon4} alt="icon" loading="lazy" />
+								{fetchCartitems.length > 0 && (
+									<span className="basket_wishlist-count">
+										{fetchCartitems.length}
+									</span>
+								)}
 							</li>
 						</ul>
 					</div>

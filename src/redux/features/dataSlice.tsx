@@ -84,7 +84,6 @@ export const fetchDataShop = createAsyncThunk(
 export const fetchDataDetail = createAsyncThunk(
 	"data/fetchProductDetail",
 	async (id: string | undefined) => {
-		console.log("id", id);
 		if (id) {
 			const res = await axios.get(
 				`https://immutable858-001-site1.atempurl.com/api/UserProduct/getById/ProductPage?Id=${id}&SizeId=2`
@@ -167,29 +166,20 @@ const dataDetailSlice = createSlice({
 	reducers: {
 		setColorIds: (state, action) => {
 			state.colorId = action.payload;
-			console.log(state.colorId);
-			console.log("hh");
-			
 		  }
 		  
 	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchDataDetail.pending, (state) => {
-				console.log("Fetching data - Pending");
-
 				state.status = "loading";
 			})
 			.addCase(fetchDataDetail.fulfilled, (state, action) => {
-				console.log("Fetching data - succeeded");
-
 				state.status = "succeeded";
 				state.data = action.payload;
 				state.colorId = action.payload?.colors?.[0]?.id || 0;
 			})
 			.addCase(fetchDataDetail.rejected, (state, action) => {
-				console.log("Fetching data - failed");
-
 				state.status = "failed";
 				state.error = action.error.message;
 			});

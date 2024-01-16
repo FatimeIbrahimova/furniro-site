@@ -23,8 +23,6 @@ const ProductFeatures = ({
 }: any) => {
 	const [count, setCount] = useState(1);
 	const data = useSelector((state: RootState) => state.data.detailData.data);
-
-	const [errMsg, seterror] = useState("");
 	const navigate = useNavigate();
 	const location = useLocation();
 	const isProductDetailPage = location.pathname.includes("/product/");
@@ -35,11 +33,6 @@ const ProductFeatures = ({
 	const dispatch: ThunkDispatch<{}, void, AnyAction> = useDispatch();
 	const { id } = useParams();
 	const [colorId, setColorId] = useState(data?.colors?.[0]?.id);
-	const wishlistData = useSelector(
-		(state: RootState) => state.wishlist.fetchWishlist.data
-	);
-
-	console.log(wishlistData, "wishdata");
 
 	useEffect(() => {
 		if (itemId) {
@@ -68,28 +61,24 @@ const ProductFeatures = ({
 	};
 
 	const userId = localStorage.getItem("userId");
-	const token=localStorage.getItem("token")
+	const token = localStorage.getItem("token");
 
 	const handleAddToCart = () => {
-		if(!token){
-			navigate("/login")
-		}else{
+		if (!token) {
+			navigate("/login");
+		} else {
 			const cartItem = {
 				productId: id || itemId,
 				colorId: colorId !== undefined ? colorId : data?.colors?.[0]?.id,
 				userId: userId,
 				count: count,
 			};
-	
+
 			dispatch(postCart(cartItem)).then((confirm) => {
-				console.log(confirm);
 				if (confirm.meta.requestStatus === "rejected") {
 					alert(confirm?.payload?.response?.data?.Message);
-					seterror(
-						confirm?.payload?.response?.data?.Message || "An error occurred"
-					);
 				} else if (confirm.meta.requestStatus === "fulfilled") {
-					toast.success('Product added to card!', {
+					toast.success("Product added to card!", {
 						position: "bottom-right",
 						autoClose: 2000,
 						hideProgressBar: false,
@@ -98,28 +87,25 @@ const ProductFeatures = ({
 						draggable: true,
 						progress: undefined,
 						theme: "light",
-					  });
+					});
 					navigate("/cart");
-					seterror("");
 				}
 			});
 			isModal(false);
 		}
-		
 	};
 
 	const handleAddWishlist = async () => {
-		if(!token){
-			navigate("/login")
-		}else{
+		if (!token) {
+			navigate("/login");
+		} else {
 			const wishlistItem = {
 				productId: itemId,
 				colorId: colorId !== undefined ? colorId : data?.colors?.[0]?.id,
 				userId: Number(userId),
 			};
-	
+
 			dispatch(postWishlist(wishlistItem)).then((confirm) => {
-				console.log(confirm);
 				if (confirm.meta.requestStatus === "rejected") {
 					alert(confirm?.payload?.response?.data?.Message);
 				} else if (confirm.meta.requestStatus === "fulfilled") {
@@ -138,10 +124,7 @@ const ProductFeatures = ({
 			});
 			isModal(false);
 		}
-		
 	};
-
-	console.log(errMsg, "errMsg");
 
 	const handleSelectColor = (color: {
 		id: number;
@@ -152,7 +135,9 @@ const ProductFeatures = ({
 		const colorId = color.id;
 		setColorId(colorId);
 		dispatch(setColorIds(colorId));
-		onColorChange(colorId);
+		if (typeof onColorChange === "function") {
+			onColorChange(colorId);
+		}
 	};
 
 	return (

@@ -23,8 +23,7 @@ const ResetPassword = () => {
 	const [resetPsw, setResetPsw] = useState(false);
 	const [enterEmail, setEnterEmail] = useState(true);
 	const [email, setEmail] = useState("");
-	console.log(email, "email");
-    const navigate=useNavigate()
+	const navigate = useNavigate();
 	const {
 		handleChange,
 		values,
@@ -35,78 +34,67 @@ const ResetPassword = () => {
 		setValues,
 	} = useFormik({
 		initialValues: {
-			email: otpCode || resetPsw ? email : "", 
+			email: otpCode || resetPsw ? email : "",
 			otpToken: "",
-			newPassword:"",
-			repeatNewPassword:""
+			newPassword: "",
+			repeatNewPassword: "",
 		},
 		validationSchema: otpCode
-				? otpSchema
-				: enterEmail
-				? forgetPasswordSchema
-				: resetPsw
-				? ResetPasswordSchema
-				: null,
+			? otpSchema
+			: enterEmail
+			? forgetPasswordSchema
+			: resetPsw
+			? ResetPasswordSchema
+			: null,
 		onSubmit: (values) => {
 			if (otpCode) {
-				console.log(values, "value");
 				dispatch(postOtpConfirm(values)).then((confirm) => {
 					if (confirm.meta.requestStatus === "rejected") {
-						console.log("Confirm: ", confirm.payload.response.data);
 						alert(confirm.payload.response.data.Message);
 					} else if (confirm.meta.requestStatus === "fulfilled") {
-						Swal.fire(confirm.payload).then(()=>{
+						Swal.fire(confirm.payload).then(() => {
 							setOtpCode(false);
 							setResetPsw(true);
 						});
 						resetForm();
-						
 					}
 				});
-			} else if (enterEmail){
+			} else if (enterEmail) {
 				dispatch(postEmailForgetPassword(values)).then((confirm) => {
-					console.log(values,"mm");
-					
 					if (confirm.meta.requestStatus === "rejected") {
-						console.log("Confirm: ", confirm);
 						alert(confirm?.payload?.response?.data?.Message);
 					} else if (confirm.meta.requestStatus === "fulfilled") {
-						Swal.fire(confirm?.payload).then(()=>{
+						Swal.fire(confirm?.payload).then(() => {
 							setOtpCode(true);
-							setEnterEmail(false)
+							setEnterEmail(false);
 						});
 						resetForm();
 						setEmail(values.email);
 					}
 				});
-			}else if (resetPsw) {
-							console.log(values,"vv");
-			
-							dispatch(postResetPassword(values)).then((confirm) => {
-								console.log(values,"value");
-								
-								if (confirm.meta.requestStatus === "rejected") {
-									console.log("Confirm: ", confirm);
-									alert(confirm?.payload?.response?.data?.Message);
-								} else if (confirm.meta.requestStatus === "fulfilled") {
-									Swal.fire(confirm?.payload).then(()=>{
-										navigate("/login")
-									});
-								}
-							});
-						}
+			} else if (resetPsw) {
+				dispatch(postResetPassword(values)).then((confirm) => {
+					if (confirm.meta.requestStatus === "rejected") {
+						alert(confirm?.payload?.response?.data?.Message);
+					} else if (confirm.meta.requestStatus === "fulfilled") {
+						Swal.fire(confirm?.payload).then(() => {
+							navigate("/login");
+						});
+					}
+				});
+			}
 		},
 	});
 
 	useEffect(() => {
 		setValues({
-			email: otpCode || resetPsw? email : "",
+			email: otpCode || resetPsw ? email : "",
 			otpToken: "",
-			newPassword:"",
-			repeatNewPassword:""
+			newPassword: "",
+			repeatNewPassword: "",
 		});
 	}, [otpCode, email]);
-	
+
 	const handleCancel = () => {
 		resetForm();
 	};
@@ -187,7 +175,9 @@ const ResetPassword = () => {
 									/>
 									<br />
 									{errors.newPassword && touched.newPassword && (
-										<span style={{ color: "red",fontSize:"14px" }}>{errors.newPassword}</span>
+										<span style={{ color: "red", fontSize: "14px" }}>
+											{errors.newPassword}
+										</span>
 									)}
 								</div>
 								<div>
@@ -200,7 +190,9 @@ const ResetPassword = () => {
 									/>
 									<br />
 									{errors.repeatNewPassword && touched.repeatNewPassword && (
-										<span style={{ color: "red",fontSize:"14px" }}>{errors.repeatNewPassword}</span>
+										<span style={{ color: "red", fontSize: "14px" }}>
+											{errors.repeatNewPassword}
+										</span>
 									)}
 								</div>
 								<div className="reset-password-btn">

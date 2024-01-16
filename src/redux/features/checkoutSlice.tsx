@@ -142,10 +142,7 @@ export const checkoutSlice = createSlice({
         })
         .addCase(postCheckout.rejected, (state, action) => {
             state.status = "failed";
-            // state.error = action.error;
-            // console.log( action.error.message);
-            console.log( {action});
-            console.log( {data:state.data});
+            state.error = action.error.message;
             
         })
 	},

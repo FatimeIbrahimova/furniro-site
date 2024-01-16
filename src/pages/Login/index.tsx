@@ -7,7 +7,7 @@ import { postLogin } from "../../redux/features/loginSlice";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 const Login: React.FC = () => {
@@ -34,6 +34,7 @@ const Login: React.FC = () => {
 				} else if (confirm.meta.requestStatus === "fulfilled") {
 					Swal.fire("Login successfully").then(()=>{
 						navigate("/");
+						navigate(0)
 					})
 					seterror("");
 				}
@@ -45,6 +46,15 @@ const Login: React.FC = () => {
 		handleChange(e);
 		seterror("");
 	};
+
+	useEffect(() => {
+		window.scrollTo({
+			top: 0,
+			left: 0,
+			behavior: "smooth",
+		});
+	}, []);
+
 
 	return (
 		<div className="login">
