@@ -42,7 +42,7 @@ const ProductDetails: React.FC<ProductTypes> = () => {
 
 	useEffect(() => {
 		if (id) {
-			dispatch(fetchDataDetail({ id }));
+			dispatch(fetchDataDetail(id));
 		}
 	}, [dispatch, id]);
 
