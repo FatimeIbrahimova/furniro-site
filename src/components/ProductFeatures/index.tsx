@@ -36,7 +36,7 @@ const ProductFeatures = ({
 
 	useEffect(() => {
 		if (itemId) {
-			dispatch(fetchDataDetail(itemId));
+			dispatch(fetchDataDetail({ id: itemId }));
 		}
 	}, [dispatch, itemId]);
 
@@ -48,7 +48,7 @@ const ProductFeatures = ({
 	useEffect(() => {
 		setSelectedColor(data?.colors?.[0]?.colorHexCode);
 		setSelectedSize(data?.sizes?.[0]?.sizeName);
-	}, [data?.colors]);
+	}, [data?.colors, data?.sizes]);
 
 	const decreaseCount = () => {
 		if (count > 1) {
@@ -139,6 +139,11 @@ const ProductFeatures = ({
 			onColorChange(colorId);
 		}
 	};
+
+	const handleSelectSize = (size: any) => {
+		setSelectedSize(size.sizeName);
+	};
+
 
 	return (
 		<div>
@@ -246,7 +251,7 @@ const ProductFeatures = ({
 											className={`size ${
 												selectedSize === size.sizeName ? "selected" : ""
 											}`}
-											onClick={() => setSelectedSize(size.sizeName)}
+											onClick={() => handleSelectSize(size)}
 										>
 											<span
 												className={`${

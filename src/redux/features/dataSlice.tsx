@@ -28,79 +28,102 @@ export const fetchDataShop = createAsyncThunk(
 		productColors,
 		productMinPrice,
 		productMaxPrice,
-		isNew
+		isNew,
 	}: {
 		page: number;
 		count: number;
 		sortValue?: any;
 		categoryNames?: { label: string; value: number }[];
 		tagNames?: { label: string; value: number }[];
-		productSizes?:{ label: string; value: number }[];
-		productColors?:{ label: string; value: number }[];
-		productMinPrice?:number;
-		productMaxPrice?:number;
-		isNew?:boolean
+		productSizes?: { label: string; value: number }[];
+		productColors?: { label: string; value: number }[];
+		productMinPrice?: number;
+		productMaxPrice?: number;
+		isNew?: boolean;
 	}) => {
 		let url = `https://immutable858-001-site1.atempurl.com/api/UserProduct/Products?Page=${page}&ShowMore.Take=${count}`;
 
+		if (sortValue !== "undefined" && sortValue) {
+			url += `&OrderBy=${sortValue}`;
+		}
 
-		if (sortValue !== 'undefined' && sortValue) {
-		  url += `&OrderBy=${sortValue}`;
-		}
-	
 		if (categoryNames && categoryNames.length > 0) {
-			url += categoryNames?.map((item:any) => `&CategoryNames=${item.label}`).join("")
+			url += categoryNames
+				?.map((item: any) => `&CategoryNames=${item.label}`)
+				.join("");
 			console.log(url);
-			
 		}
-		if(tagNames && tagNames.length>0){
-			url += tagNames?.map((item:any) => `&ProductTags=${item.label}`).join("")
+		if (tagNames && tagNames.length > 0) {
+			url += tagNames
+				?.map((item: any) => `&ProductTags=${item.label}`)
+				.join("");
 		}
-	
+
 		if (productSizes && productSizes.length > 0) {
-			url += productSizes?.map((item:any) => `&ProductSizes=${item.label}`).join("")
+			url += productSizes
+				?.map((item: any) => `&ProductSizes=${item.label}`)
+				.join("");
 			console.log(url);
 		}
 		if (productColors && productColors.length > 0) {
-			url += productColors?.map((item:any) => `&ProductColors=${item.label.replace(/#/g, '%23')}`).join("")
-
+			url += productColors
+				?.map(
+					(item: any) => `&ProductColors=${item.label.replace(/#/g, "%23")}`
+				)
+				.join("");
 		}
-		if(productMinPrice){
-			url+=`&MinPrice=${productMinPrice}`
+		if (productMinPrice) {
+			url += `&MinPrice=${productMinPrice}`;
 		}
-		if(productMaxPrice){
-			url+=`&MaxPrice=${productMaxPrice}`
+		if (productMaxPrice) {
+			url += `&MaxPrice=${productMaxPrice}`;
 		}
-		if(isNew){
-			url+=`&IsNew=${isNew}`
+		if (isNew) {
+			url += `&IsNew=${isNew}`;
 		}
 		const response = await axios.get(url);
-	
+
 		return response.data;
-	
 	}
 );
 
+// export const fetchDataDetail = createAsyncThunk(
+// 	"data/fetchProductDetail",
+// 	async ({ id, sizeId }: { id: number | undefined; sizeId: number | undefined }) => {
+// 	  if (id) {
+// 		const res = await axios.get(
+// 		  `https://immutable858-001-site1.atempurl.com/api/UserProduct/getById/ProductPage?Id=${id}&SizeId=2`
+// 		);
+// 		console.log(res.data,"ff");
+
+// 		return res.data;
+// 	  }
+// 	}
+//   );
 export const fetchDataDetail = createAsyncThunk(
 	"data/fetchProductDetail",
-	async (id: string | undefined) => {
-		if (id) {
-			const res = await axios.get(
-				`https://immutable858-001-site1.atempurl.com/api/UserProduct/getById/ProductPage?Id=${id}&SizeId=2`
-			);
-			return res.data;
-			
+	async ({
+		id,
+		sizeId,
+	}: {
+		id: string | undefined;
+		sizeId?: number | undefined;
+	}) => {
+		let url = `https://immutable858-001-site1.atempurl.com/api/UserProduct/getById/ProductPage?Id=${id}`;
+
+		if (sizeId) {
+			url += `&SizeId=${sizeId}`;
 		}
+		const response = await axios.get(url);
+
+		return response.data;
 	}
 );
-
-
-  
 
 export const fetchRelatedData = createAsyncThunk(
 	"data/fetchRelatedData",
 	async ({ id, count }: { id: string | undefined; count: number }) => {
-		if(id){
+		if (id) {
 			const res = await axios.get(
 				`https://immutable858-001-site1.atempurl.com/api/UserProduct/RelatedProducts?ShowMore.Take=${count}&MainProductId=${id}`
 			);
@@ -128,7 +151,7 @@ interface dataDetailState {
 	data: ProductTypes;
 	status: string;
 	error: null | string | undefined;
-	colorId:number
+	colorId: number;
 }
 
 const dataSlice = createSlice({
@@ -160,14 +183,13 @@ const dataDetailSlice = createSlice({
 		data: {},
 		status: "idle",
 		error: null,
-		colorId:0,
-		selectedProductImage: ""
+		colorId: 0,
+		selectedProductImage: "",
 	} as dataDetailState,
 	reducers: {
 		setColorIds: (state, action) => {
 			state.colorId = action.payload;
-		  }
-		  
+		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -262,7 +284,6 @@ const rootReducer = combineReducers({
 	relatedData: relatedDataSlice.reducer,
 	searchData: searchSlice.reducer,
 });
-
 
 export default rootReducer;
 export const { setColorIds } = dataDetailSlice.actions;

@@ -42,7 +42,7 @@ const ProductDetails: React.FC<ProductTypes> = () => {
 
 	useEffect(() => {
 		if (id) {
-			dispatch(fetchDataDetail(id));
+			dispatch(fetchDataDetail({ id }));
 		}
 	}, [dispatch, id]);
 
@@ -68,12 +68,6 @@ const ProductDetails: React.FC<ProductTypes> = () => {
 		});
 	}, []);
 
-	// useEffect(() => {
-	// 	console.log(
-	// 		"Updated 'selectedProductImage' valueeeeeee:",
-	// 		selectedProductImage
-	// 	);
-	// }, [selectedProductImage]);
 	useEffect(() => {
 		dispatch(fetchReview({ productId: id, count: 100 }));
 	}, []);
