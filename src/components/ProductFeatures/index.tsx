@@ -36,7 +36,7 @@ const ProductFeatures = ({
 
 	useEffect(() => {
 		if (itemId) {
-			dispatch(fetchDataDetail({ id: itemId }));
+			dispatch(fetchDataDetail(itemId));
 		}
 	}, [dispatch, itemId]);
 
@@ -91,7 +91,10 @@ const ProductFeatures = ({
 					navigate("/cart");
 				}
 			});
-			isModal(false);
+			if(itemId){
+				isModal(false);
+			}
+			
 		}
 	};
 
