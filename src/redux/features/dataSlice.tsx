@@ -88,25 +88,6 @@ export const fetchDataShop = createAsyncThunk(
 );
 
 
-// export const fetchDataDetail = createAsyncThunk(
-// 	"data/fetchProductDetail",
-// 	async ({
-// 		id,
-// 		sizeId,
-// 	}: {
-// 		id: string | undefined;
-// 		sizeId?: number | undefined;
-// 	}) => {
-// 		let url = `https://immutable858-001-site1.atempurl.com/api/UserProduct/getById/ProductPage?Id=${id}`;
-
-// 		if (sizeId) {
-// 			url += `&SizeId=${sizeId}`;
-// 		}
-// 		const response = await axios.get(url);
-
-// 		return response.data;
-// 	}
-// );
 export const fetchDataDetail = createAsyncThunk(
 	"data/fetchProductDetail",
 	async (id: string | undefined) => {
