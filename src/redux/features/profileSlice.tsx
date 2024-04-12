@@ -6,11 +6,13 @@ import {
 import axios from "axios";
 
 const token = localStorage.getItem("token");
+const baseURL = `${import.meta.env.VITE_APP_BASE_URL}`;
+
 export const fetchProfile = createAsyncThunk(
 	"fetchProfile",
 	async (id: string | null) => {
 		const res = await axios.get(
-			`https://immutable858-001-site1.atempurl.com/api/ApplicationUser/${id}`
+			`${baseURL}/ApplicationUser/${id}`
 		);
 
 		return res.data;
@@ -22,7 +24,7 @@ export const deleteProfile = createAsyncThunk(
 	async (userName: string | undefined, { rejectWithValue }) => {
 		try {
 			const res = await axios.put(
-				"https://immutable858-001-site1.atempurl.com/api/ApplicationUser/DeleteUser",
+				`${baseURL}/ApplicationUser/DeleteUser`,
 				userName,
 				{
 					headers: {
@@ -45,7 +47,7 @@ export const updateProfile = createAsyncThunk(
 	async (state: any) => {
 		try {
 			const res = await axios.put(
-				"https://immutable858-001-site1.atempurl.com/api/ApplicationUser/UpdateUser",
+				`${baseURL}/ApplicationUser/UpdateUser`,
 				state,
 				{
 					headers: {
@@ -67,7 +69,7 @@ export const resetPassword = createAsyncThunk(
 	async (statePassword: any, { rejectWithValue }) => {
 		try {
 			const res = await axios.put(
-				"https://immutable858-001-site1.atempurl.com/api/ApplicationUser/ChangePassword",
+				`${baseURL}/ApplicationUser/ChangePassword`,
 				statePassword,
 				{
 					headers: {

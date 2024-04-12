@@ -28,6 +28,7 @@
                     .product-info {
                         padding: 20px 20px 30px 15px;
                         background-color: #f4f5f7;
+                        padding-bottom: 70px;
                         .desc {
                             padding-top: 8px;
                             padding-bottom: 8px;
@@ -146,7 +147,41 @@
                             }
                         }
                     }
-
+                    .buttons_mobile{
+                        display:  none ;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        cursor: pointer;
+                        z-index: 2;
+                        img{
+                            width: 28px;
+                        height: 28px;
+                        color: black;
+                        }
+                        li{
+                        display: flex;
+                        align-items: center;
+                        .fa-heart{
+                            color: black;
+                            font-size: 24px;
+                        }
+                        .fa-solid{
+                            color: #b88e2f;
+                        }
+                        }
+                        .icons_mobile{
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                            position: absolute;
+                            bottom: 15px;
+                            right: 22px;
+                            padding-top: 20px;
+                        }
+                    }
                     .hover-effect-overlay {
                         position: absolute;
                         top: 0;
@@ -173,6 +208,9 @@
                         opacity: 0;
                         display: none;
                         .hover-effect-overlay {
+                            opacity: 0 !important;
+                        }
+                        .buttons_mobile {
                             opacity: 0 !important;
                         }
                     }
@@ -213,6 +251,17 @@
     .products-section-container_cards-wrapper {
         &-card {
             width: 30% !important;
+        }
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .products-section-container_cards-wrapper {
+        .hover-effect-overlay{
+          display: none !important;
+        }
+        .buttons_mobile{
+            display:  block !important;
         }
     }
 }

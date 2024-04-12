@@ -21,8 +21,10 @@ const Wishlist = () => {
 	const userId = localStorage.getItem("userId");
 
 	const handleRemoveFromWishlist = (product: ProductTypes2) => {
+		console.log(product);
+		
 		const wishlistItem = {
-			productId: product.productId,
+			productId: product.id,
 			colorId: product.productImages.id,
 			userId: userId,
 		};
@@ -50,6 +52,7 @@ const Wishlist = () => {
 	}, []);
 	const favori = wishlistData?.[0]?.favorites;
 	const likedProductss = favori?.map((item: any) => item) || [];
+console.log(wishlistData);
 
 	return (
 		<div className="wishlist">
@@ -77,7 +80,7 @@ const Wishlist = () => {
 							<div className="liked-products-wrapper">
 								{/* @ts-ignore */}
 								{wishlistData?.[0].favorites?.map((item: any) => (
-									<div className="liked-product" key={item.productId}>
+									<div className="liked-product" key={item.id}>
 										<div className="liked-product_leftside">
 											<i
 												className="fa-solid fa-x"
@@ -86,7 +89,7 @@ const Wishlist = () => {
 											<div className="img_title">
 												<div className="liked-product-img">
 													<img
-														src={item.productImages.imageFiles?.[0]}
+														src={item.imageFiles?.[0]}
 														alt="img"
 													/>
 												</div>
@@ -96,7 +99,7 @@ const Wishlist = () => {
 										<div className="subtitle">
 											<div
 												style={{
-													backgroundColor: item.productImages.colorHexCode,
+													// backgroundColor: item.productImages.colorHexCode,
 													width: 35,
 													height: 35,
 													borderRadius: "50%",
@@ -109,7 +112,7 @@ const Wishlist = () => {
 												: item.salePrice}
 										</div>
 										<div className="wishlist-buttons">
-											<NavLink to={`/product/${item.productId}`}>
+											<NavLink to={`/product/${item.id}`}>
 												<button>Add To Cart</button>
 											</NavLink>
 											<button className="delete-btn">X</button>

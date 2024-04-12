@@ -2,11 +2,13 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { ProductTypes } from "../../types";
 
+const baseURL = `${import.meta.env.VITE_APP_BASE_URL}`;
+
 export const fetchDescription = createAsyncThunk(
 	"data/fetchDescription",
 	async (id: string | undefined) => {
 		const res = await axios.get(
-			`https://immutable858-001-site1.atempurl.com/api/UserProduct/getById/Description?Id=${id}`
+			`${baseURL}/UserProduct/getById/Description?Id=${id}`
 		);
 		return res.data;
 	}

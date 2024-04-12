@@ -65,7 +65,7 @@ const Login: React.FC = () => {
 						<h2>Log in</h2>
 						<div className="form-wrapper">
 							<div className="form mail">
-								<label>userName</label>
+								<label>UserName</label>
 								<div>
 									<input
 										type="text"

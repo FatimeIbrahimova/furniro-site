@@ -6,11 +6,13 @@ import {
 import { ProductTypes } from "../../types";
 import axios from "axios";
 
+const baseURL = `${import.meta.env.VITE_APP_BASE_URL}`;
+
 export const fetchData = createAsyncThunk(
 	"data/fetchData",
 	async (count: number) => {
 		const response = await axios.get(
-			`https://immutable858-001-site1.atempurl.com/api/UserProduct/Products?ShowMore.Take=${count}`
+			`${baseURL}/UserProduct/Products?ShowMore.Take=${count}`
 		);
 		return response.data;
 	}
@@ -41,7 +43,7 @@ export const fetchDataShop = createAsyncThunk(
 		productMaxPrice?: number;
 		isNew?: boolean;
 	}) => {
-		let url = `https://immutable858-001-site1.atempurl.com/api/UserProduct/Products?Page=${page}&ShowMore.Take=${count}`;
+		let url = `${baseURL}/UserProduct/Products?Page=${page}&ShowMore.Take=${count}`;
 
 		if (sortValue !== "undefined" && sortValue) {
 			url += `&OrderBy=${sortValue}`;
@@ -51,7 +53,6 @@ export const fetchDataShop = createAsyncThunk(
 			url += categoryNames
 				?.map((item: any) => `&CategoryNames=${item.label}`)
 				.join("");
-			console.log(url);
 		}
 		if (tagNames && tagNames.length > 0) {
 			url += tagNames
@@ -63,7 +64,6 @@ export const fetchDataShop = createAsyncThunk(
 			url += productSizes
 				?.map((item: any) => `&ProductSizes=${item.label}`)
 				.join("");
-			console.log(url);
 		}
 		if (productColors && productColors.length > 0) {
 			url += productColors
@@ -93,7 +93,7 @@ export const fetchDataDetail = createAsyncThunk(
 	async (id: string | undefined) => {
 		if (id) {
 			const res = await axios.get(
-				`https://immutable858-001-site1.atempurl.com/api/UserProduct/getById/ProductPage?Id=${id}`
+				`${baseURL}/UserProduct/getById/ProductPage?Id=${id}`
 			);
 			return res.data;
 			
@@ -107,7 +107,7 @@ export const fetchRelatedData = createAsyncThunk(
 	async ({ id, count }: { id: string | undefined; count: number }) => {
 		if (id) {
 			const res = await axios.get(
-				`https://immutable858-001-site1.atempurl.com/api/UserProduct/RelatedProducts?ShowMore.Take=${count}&MainProductId=${id}`
+				`${baseURL}/UserProduct/RelatedProducts?ShowMore.Take=${count}&MainProductId=${id}`
 			);
 			return res.data;
 		}
@@ -117,7 +117,7 @@ export const fetchSearchData = createAsyncThunk(
 	"data/fetchSearchData",
 	async ({ value, count }: { value: string; count: number }) => {
 		const res = await axios.get(
-			`https://immutable858-001-site1.atempurl.com/api/UserProduct/Products?Prompt=${value}&ShowMore.TakeProduct=${count}`
+			`${baseURL}/UserProduct/Products?Prompt=${value}&ShowMore.TakeProduct=${count}`
 		);
 		return res.data;
 	}

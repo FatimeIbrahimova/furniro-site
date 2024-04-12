@@ -5,12 +5,9 @@ import "./style.scss";
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import { ProductTypes } from "../../types";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchWishlist} from "../../redux/features/wishlistSlice";
-import {
-	fetchData,
-	fetchDataShop,
-	fetchRelatedData,
-} from "../../redux/features/dataSlice";
+import { fetchWishlist } from "../../redux/features/wishlistSlice";
+import SvgIcon4 from "../../images/ant-design_shopping-cart-outlined.svg";
+import { fetchData, fetchRelatedData } from "../../redux/features/dataSlice";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "../../redux";
 import Modal from "../ModalComponent";
@@ -26,8 +23,10 @@ const ProductCard: React.FC<ProductTypes> = () => {
 	const dataStatus = useSelector((state: RootState) => state.data.data.status);
 	const dataShop = useSelector((state: RootState) => state.data.dataShop.data);
 	const relatedData = useSelector((state: RootState) => state.data.relatedData);
-	const wishlistData:any=useSelector((state: RootState) => state.wishlist.fetchWishlist.data);
-	
+	const wishlistData: any = useSelector(
+		(state: RootState) => state.wishlist.fetchWishlist.data
+	);
+
 	const { id }: RouteParams = useParams();
 
 	const products = data?.map((item) => item.products);
@@ -52,7 +51,7 @@ const ProductCard: React.FC<ProductTypes> = () => {
 
 	useEffect(() => {
 		dispatch(fetchData(8));
-		dispatch(fetchDataShop({ page: 1, count: 12 }));
+		// dispatch(fetchDataShop({ page: 1, count: filterNumber }));
 	}, [dispatch]);
 
 	useEffect(() => {
@@ -70,11 +69,12 @@ const ProductCard: React.FC<ProductTypes> = () => {
 	}, []);
 
 	const handleClickLike = (likedProduct: ProductTypes) => {
+		console.log(likedProduct.id);
+
 		setLikeClicked(true);
 		openModal(likedProduct.id);
 		setAddCard(false);
 	};
-
 
 	const handleProductDetail = (
 		e: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -94,22 +94,29 @@ const ProductCard: React.FC<ProductTypes> = () => {
 	const openModal = (itemId: number | null) => {
 		setModal(itemId);
 	};
+
 	//share
 	const handleClickSocialIcon = (item: ProductTypes, e: React.MouseEvent) => {
-		const urlToShare = `http://localhost:5173/${item.id}`;
+		const urlToShare = `${window.origin}/${item.id}`;
 		const socialMedia = e.currentTarget.classList[1];
 
 		switch (socialMedia) {
-			case "fa-instagram":
+			case "fa-facebook":
 				window.open(
-					`https://www.instagram.com/?utm_source=ig_web_copy_link&url=${urlToShare}`,
+					`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+						urlToShare
+					)}&quote=${encodeURIComponent(
+						`Check out this product: ${urlToShare}`
+					)}`,
 					"_blank"
 				);
 				break;
-			case "fa-linkedin":
+			case "fa-telegram":
 				window.open(
-					`https://www.linkedin.com/sharer/sharer.php?u=${encodeURIComponent(
+					`https://t.me/share/url?url=${encodeURIComponent(
 						urlToShare
+					)}&text=${encodeURIComponent(
+						`Check out this product: ${urlToShare}`
 					)}`,
 					"_blank"
 				);
@@ -140,9 +147,9 @@ const ProductCard: React.FC<ProductTypes> = () => {
 	};
 
 	const favori = wishlistData?.[0]?.favorites;
-    const likedProductss = favori?.map((item:any) => item) || []; 
-	
-	
+	const likedProductss = favori?.map((item: any) => item) || [];
+
+
 	return (
 		<div className="product-card">
 			<div className="product-card-container">
@@ -187,7 +194,7 @@ const ProductCard: React.FC<ProductTypes> = () => {
 													-{item.discountPercent}%
 												</span>
 											)}
-											{item.isNew && item.discountPercent === 0 && (
+											{item.isNew && (
 												<span className="new">New</span>
 											)}
 										</div>
@@ -220,7 +227,7 @@ const ProductCard: React.FC<ProductTypes> = () => {
 																	alt="icon"
 																	onClick={() =>
 																		handleSocialMediaShare(
-																			`http://localhost:5173/${id}`
+																			`${window.origin}/${id}`
 																		)
 																	}
 																/>
@@ -229,7 +236,7 @@ const ProductCard: React.FC<ProductTypes> = () => {
 															<ul className="social-icons">
 																<li>
 																	<i
-																		className="fa-brands fa-instagram"
+																		className="fa-brands fa-facebook"
 																		onClick={(e) =>
 																			handleClickSocialIcon(item, e)
 																		}
@@ -237,7 +244,7 @@ const ProductCard: React.FC<ProductTypes> = () => {
 																</li>
 																<li>
 																	<i
-																		className="fa-brands fa-linkedin"
+																		className="fa-brands fa-telegram"
 																		onClick={(e) =>
 																			handleClickSocialIcon(item, e)
 																		}
@@ -254,21 +261,50 @@ const ProductCard: React.FC<ProductTypes> = () => {
 															</ul>
 														</li>
 
-														<li >
+														<li>
 															{likedProductss?.some(
-																(product:any) => product.productId === item.id
+																(product: any) => product.id === item.id
 															) ? (
 																<i className="fa-solid fa-heart"></i>
 															) : (
 																<img src={SvgIcon3} alt="icon" />
 															)}
 															{likedProductss?.some(
-																(product:any) => product.productId === item.id
-															)
-																? <span>Unlike</span>
-																: <span onClick={() => handleClickLike(item)}>Like</span>}
+																(product: any) => product.id === item.id
+															) ? (
+																<span>Unlike</span>
+															) : (
+																<span onClick={() => handleClickLike(item)}>
+																	Like
+																</span>
+															)}
 														</li>
 													</ul>
+												</div>
+											</div>
+											<div
+												className={` ${
+													modal === item.id ? "disable-hover" : "buttons_mobile"
+												}`}
+											>
+												<div onClick={(e) => handleProductDetail(e)}>
+													<div className="icons_mobile">
+														<li>
+															{likedProductss?.some(
+																(product: any) => product.id === item.id
+															) ? (
+																<i className="fa-solid fa-heart"></i>
+															) : (
+																<i className="fa-regular fa-heart"></i>
+															)}
+														</li>
+														<img
+															src={SvgIcon4}
+															alt="icon"
+															loading="lazy"
+															onClick={() => handleAddToCard(item)}
+														/>
+													</div>
 												</div>
 											</div>
 										</NavLink>
@@ -332,7 +368,7 @@ const ProductCard: React.FC<ProductTypes> = () => {
 									{item.discountPercent !== 0 && item.discountedPrice && (
 										<span className="discount">-{item.discountPercent}%</span>
 									)}
-									{item.isNew && item.discountPercent == 0 && (
+									{item.isNew && (
 										<span className="new">New</span>
 									)}
 								</div>
@@ -365,7 +401,7 @@ const ProductCard: React.FC<ProductTypes> = () => {
 															alt="icon"
 															onClick={() =>
 																handleSocialMediaShare(
-																	`http://localhost:5173/${id}`
+																	`${window.origin}/${id}`
 																)
 															}
 														/>{" "}
@@ -407,6 +443,31 @@ const ProductCard: React.FC<ProductTypes> = () => {
 														: "Like"}
 												</li>
 											</ul>
+										</div>
+									</div>
+									<div
+										className={` ${
+											modal === item.id ? "disable-hover" : "buttons_mobile"
+										}`}
+									>
+										<div onClick={(e) => handleProductDetail(e)}>
+											<div className="icons_mobile">
+												<li>
+													{likedProductss?.some(
+														(product: any) => product.id === item.id
+													) ? (
+														<i className="fa-solid fa-heart"></i>
+													) : (
+														<i className="fa-regular fa-heart"></i>
+													)}
+												</li>
+												<img
+													src={SvgIcon4}
+													alt="icon"
+													loading="lazy"
+													onClick={() => handleAddToCard(item)}
+												/>
+											</div>
 										</div>
 									</div>
 								</NavLink>
@@ -456,7 +517,7 @@ const ProductCard: React.FC<ProductTypes> = () => {
 									{item.discountPercent !== 0 && item.discountedPrice && (
 										<span className="discount">-{item.discountPercent}%</span>
 									)}
-									{item.isNew && item.discountPercent == 0 && (
+									{item.isNew && (
 										<span className="new">New</span>
 									)}
 								</div>
@@ -489,7 +550,7 @@ const ProductCard: React.FC<ProductTypes> = () => {
 															alt="icon"
 															onClick={() =>
 																handleSocialMediaShare(
-																	`http://localhost:5173/${id}`
+																	`${window.origin}/${id}`
 																)
 															}
 														/>{" "}
@@ -533,9 +594,34 @@ const ProductCard: React.FC<ProductTypes> = () => {
 											</ul>
 										</div>
 									</div>
+									<div
+										className={` ${
+											modal === item.id ? "disable-hover" : "buttons_mobile"
+										}`}
+									>
+										<div onClick={(e) => handleProductDetail(e)}>
+											<div className="icons_mobile">
+												<li>
+													{likedProductss?.some(
+														(product: any) => product.id === item.id
+													) ? (
+														<i className="fa-solid fa-heart"></i>
+													) : (
+														<i className="fa-regular fa-heart"></i>
+													)}
+												</li>
+												<img
+													src={SvgIcon4}
+													alt="icon"
+													loading="lazy"
+													onClick={() => handleAddToCard(item)}
+												/>
+											</div>
+										</div>
+									</div>
 								</NavLink>
 								{modal === item.id && (
-										<Modal
+									<Modal
 										itemId={modal}
 										onClose={() => setModal(null)}
 										isModal={openModal}

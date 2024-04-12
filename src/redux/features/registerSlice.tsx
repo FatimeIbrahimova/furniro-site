@@ -1,6 +1,8 @@
 import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const baseURL = `${import.meta.env.VITE_APP_BASE_URL}`;
+
 export const postRegister = createAsyncThunk(
 	"postRegister",
 	async (
@@ -15,7 +17,7 @@ export const postRegister = createAsyncThunk(
 	) => {
 		try {
 			const res = await axios.post(
-				"https://immutable858-001-site1.atempurl.com/api/ApplicationUser/CreateUser",
+				`${baseURL}/ApplicationUser/CreateUser`,
 				values
 			);
 

@@ -14,6 +14,8 @@ import { fetchContactInfo } from "../../redux/features/contactSlice";
 import Swal from "sweetalert2";
 import { ContactInfo } from "../../types";
 
+const baseURL = `${import.meta.env.VITE_APP_BASE_URL}`;
+
 const Contact: React.FC = () => {
 	const dispatch: ThunkDispatch<{}, void, AnyAction> = useDispatch();
 	const info = useSelector(
@@ -46,7 +48,7 @@ const Contact: React.FC = () => {
 		onSubmit: async (values) => {
 			try {
 				const response = await fetch(
-					"https://immutable858-001-site1.atempurl.com/api/ContactMessage",
+					`${baseURL}/ContactMessage`,
 					{
 						method: "POST",
 						headers: {
@@ -72,7 +74,7 @@ const Contact: React.FC = () => {
 					throw new Error(data.Message || "An error occurred");
 				}
 			} catch (error) {
-				console.error("Error in postContact:", error);
+				// console.error("Error in postContact:", error);
 			}
 		},
 	});
@@ -90,9 +92,9 @@ const Contact: React.FC = () => {
 					</p>
 				</div>
 				<div className="container">
-					<div className="container-info">
+					{/* <div className="container-info"> */}
 						{info?.map((item: ContactInfo) => (
-							<div key={item.id}>
+							<div key={item.id} className="container-info">
 								<div className="address">
 									<div>
 										<img src={AddressSvg} alt="img" className="address-icon" />
@@ -125,7 +127,7 @@ const Contact: React.FC = () => {
 								</div>
 							</div>
 						))}
-					</div>
+					{/* </div> */}
 
 					<div className="container-form">
 						<form action="" onSubmit={handleSubmit}>

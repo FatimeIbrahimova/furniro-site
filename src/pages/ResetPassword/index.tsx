@@ -34,7 +34,7 @@ const ResetPassword = () => {
 		setValues,
 	} = useFormik({
 		initialValues: {
-			email: otpCode || resetPsw ? email : "",
+			email: email,
 			otpToken: "",
 			newPassword: "",
 			repeatNewPassword: "",

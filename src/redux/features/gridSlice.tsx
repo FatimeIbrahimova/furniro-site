@@ -5,12 +5,13 @@ import {
 import { gridTypes } from "../../types";
 import axios from "axios";
 
+const baseURL = `${import.meta.env.VITE_APP_BASE_URL}`;
 
 export const fetchGrid = createAsyncThunk(
 	"data/fetchFrid",
 	async () => {
 		const res = await axios.get(
-			`https://immutable858-001-site1.atempurl.com/api/Home`
+			`${baseURL}/Home`
 		);
 		return res.data;
 	}

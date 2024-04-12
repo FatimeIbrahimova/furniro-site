@@ -9,6 +9,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
+const baseURL = `${import.meta.env.VITE_APP_BASE_URL}`;
+
 export const postWishlist = createAsyncThunk(
 	"postWishlist",
 	async (
@@ -21,7 +23,7 @@ export const postWishlist = createAsyncThunk(
 	) => {
 		try {
 			const res = await axios.post(
-				"https://immutable858-001-site1.atempurl.com/api/Favorite",
+				`${baseURL}/Favorite`,
 				values,
 				{
 					headers: {
@@ -39,11 +41,12 @@ export const postWishlist = createAsyncThunk(
 	}
 );
 const token = localStorage.getItem("token");
+
 export const fetchWishlist = createAsyncThunk(
 	"fetchWishlist",
 	async (userId: number | any) => {
 		const res = await axios.get(
-			`https://immutable858-001-site1.atempurl.com/api/Favorite?UserId=${userId}`,
+			`${baseURL}/Favorite?UserId=${userId}`,
 			{
 				headers: {
 					accept: "*/*",
@@ -64,7 +67,7 @@ export const removeWishlist = createAsyncThunk(
 	) => {
 		try {
 			const res = await axios.delete(
-				"https://immutable858-001-site1.atempurl.com/api/Favorite",
+				`${baseURL}/Favorite`,
 				{
 					data: wishlistItem,
 					headers: {

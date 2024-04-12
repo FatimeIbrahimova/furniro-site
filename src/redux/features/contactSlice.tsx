@@ -1,6 +1,7 @@
 import { combineReducers, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const baseURL = `${import.meta.env.VITE_APP_BASE_URL}`;
 
 export const postContact = createAsyncThunk(
 	"postContact",
@@ -13,7 +14,7 @@ export const postContact = createAsyncThunk(
 	  Authorization:string
 	}) => {
 	  const res = await axios.post(
-		"https://immutable858-001-site1.atempurl.com/api/ContactMessage",
+		`${baseURL}/ContactMessage`,
 		values
 	  );
   
@@ -25,7 +26,7 @@ export const postContact = createAsyncThunk(
 	"fetchContact",
 	async()=>{
 		const res=await axios.get(
-			`https://immutable858-001-site1.atempurl.com/api/Contact`
+			`${baseURL}/Contact`
 		)
 		return res.data
 		

@@ -72,7 +72,7 @@ export const ROUTES = [
             },
             {
                 path:"password",
-                element:<ProtectedRoute element={<ResetPassword/> } />
+                element:<ResetPassword/>
             },
             {
                 path:"wishlist",

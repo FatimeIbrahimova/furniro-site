@@ -7,19 +7,45 @@ import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "../../redux";
 import { useLocation } from "react-router-dom";
 
-const Pagination = ({ blog, value, categoryId }: any) => {
+const Pagination = ({
+	blog,
+	value,
+	categoryId,
+	filterNumber,
+	selectedTitle,
+	selectedCategories,
+	selectedTags,
+	selectedSizes,
+	selectedColors,
+	selectedMinPrice,
+	selectedMaxPrice,
+	isNewChecked,
+}: any) => {
 	const [selectedNumber, setSelectedNumber] = useState(1);
 	const dispatch: ThunkDispatch<{}, void, AnyAction> = useDispatch();
 	const data = useSelector((state: RootState) => state.data.dataShop.data);
 	const location = useLocation();
 	const isShopPage = location.pathname === "/shop";
-	const itemsPerPage = isShopPage ? 12 : 3;
+	const itemsPerPage = isShopPage ? filterNumber : 3;
 
 	const handleButtonClick = (pageNumber: number) => {
 		setSelectedNumber(pageNumber);
 		if (pageNumber) {
 			isShopPage
-				? dispatch(fetchDataShop({ page: pageNumber, count: itemsPerPage }))
+				? dispatch(
+						fetchDataShop({
+							page: pageNumber,
+							count: itemsPerPage,
+							sortValue: selectedTitle,
+							categoryNames: selectedCategories,
+							tagNames: selectedTags,
+							productSizes: selectedSizes,
+							productColors: selectedColors,
+							productMinPrice: selectedMinPrice,
+							productMaxPrice: selectedMaxPrice,
+							isNew: isNewChecked,
+						})
+				  )
 				: dispatch(
 						fetchBlog({
 							page: pageNumber,
@@ -55,7 +81,6 @@ const Pagination = ({ blog, value, categoryId }: any) => {
 
 		return buttons;
 	};
-
 
 	const renderPageButton = (pageNumber: number) => (
 		<button

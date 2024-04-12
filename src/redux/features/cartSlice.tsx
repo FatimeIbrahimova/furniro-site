@@ -7,6 +7,8 @@ import {
 import { ProductTypes } from "../../types";
 import axios from "axios";
 const token = localStorage.getItem("token");
+const baseURL = `${import.meta.env.VITE_APP_BASE_URL}`;
+
 export const postCart = createAsyncThunk(
 	"postCart",
 	async (
@@ -20,7 +22,7 @@ export const postCart = createAsyncThunk(
 	) => {
 		try {
 			const res = await axios.post(
-				"https://immutable858-001-site1.atempurl.com/api/Cart/addToCart",
+				`${baseURL}/Cart/addToCart`,
 				values,
 				{
 					headers: {
@@ -42,7 +44,7 @@ export const fetchCart = createAsyncThunk(
 	"fetchCart",
 	async (userId: number | any) => {
 		const res = await axios.get(
-			`https://immutable858-001-site1.atempurl.com/api/Cart/getAllCartItems/${userId}`,
+			`${baseURL}/Cart/getAllCartItems/${userId}`,
 			{
 				headers: {
 					accept: "*/*",
@@ -63,7 +65,7 @@ export const removeCart = createAsyncThunk(
 	) => {
 		try {
 			const res = await axios.delete(
-				"https://immutable858-001-site1.atempurl.com/api/Cart/remove",
+				`${baseURL}/Cart/remove`,
 				{
 					data: cartItem,
 					headers: {
@@ -86,7 +88,7 @@ export const clearCart = createAsyncThunk(
 	async (userId: string | null, { rejectWithValue }) => {
 		try {
 			const res = await axios.post(
-				"https://immutable858-001-site1.atempurl.com/api/Cart/ClearCart",
+				`${baseURL}/Cart/ClearCart`,
 				{ appUserId: userId }
 			);
 

@@ -126,6 +126,7 @@ const Blog: React.FC = () => {
 									type="text"
 									value={value}
 									onChange={(e) => handleChange(e)}
+									placeholder="Search..."
 								/>
 								<img src={SvgSearch} alt="img" className="icon" />
 							</div>

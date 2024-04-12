@@ -2,11 +2,13 @@ import { combineReducers, createAsyncThunk, createSlice } from "@reduxjs/toolkit
 import axios from "axios";
 import { ProductTypes } from "../../types";
 
+const baseURL = `${import.meta.env.VITE_APP_BASE_URL}`;
+
 export const fetchCategory = createAsyncThunk(
 	"data/fetchCategory",
 	async () => {
 		const res = await axios.get(
-			`https://immutable858-001-site1.atempurl.com/api/Category/getAll`
+			`${baseURL}/Category/getAll`
 		);
 		return res.data;
 	}
@@ -16,7 +18,7 @@ export const fetchTags = createAsyncThunk(
 	"data/fetchtags",
 	async () => {
 		const res = await axios.get(
-			`https://immutable858-001-site1.atempurl.com/api/Tag/getAll`
+			`${baseURL}/Tag/getAll`
 		);
 		return res.data;
 	}
@@ -26,7 +28,7 @@ export const fetchSizes = createAsyncThunk(
 	"data/fetchSizes",
 	async () => {
 		const res = await axios.get(
-			`https://immutable858-001-site1.atempurl.com/api/Size/getAll`
+			`${baseURL}/Size/getAll`
 		);
 		return res.data;
 	}
@@ -36,7 +38,7 @@ export const fetchColors = createAsyncThunk(
 	"data/fetchColors",
 	async () => {
 		const res = await axios.get(
-			`https://immutable858-001-site1.atempurl.com/api/Color/getAll`
+			`${baseURL}/Color/getAll`
 		);
 		return res.data;
 	}

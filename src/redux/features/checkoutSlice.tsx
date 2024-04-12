@@ -3,11 +3,14 @@ import axios from "axios"
 import { countryAndProvinceTypes} from "../../types"
 
 const token=localStorage.getItem("token")
+
+const baseURL = `${import.meta.env.VITE_APP_BASE_URL}`;
+
 export const fetchCountries=createAsyncThunk(
     "fetchCountry",
     async()=>{
         const res=await axios.get(
-            `https://immutable858-001-site1.atempurl.com/api/Country`,{
+            `${baseURL}/Country`,{
               headers: {
                 'accept': '*/*',
                 'Authorization': `Bearer ${token}`,
@@ -23,7 +26,7 @@ export const fetchProvinces=createAsyncThunk(
     "fetchProvince",
     async(id:number)=>{
         const res=await axios.get(
-            `https://immutable858-001-site1.atempurl.com/api/Province/GetRelatedProvince/${id}`,{
+            `${baseURL}/Province/GetRelatedProvince/${id}`,{
               headers: {
                 'accept': '*/*',
                 'Authorization': `Bearer ${token}`,
@@ -53,7 +56,7 @@ export const postCheckout = createAsyncThunk(
     }, {rejectWithValue}) => {
       try {
         const res = await axios.post(
-          "https://immutable858-001-site1.atempurl.com/api/Checkout",
+          `${baseURL}/Checkout`,
           values,{
             headers: {
               'accept': '*/*',

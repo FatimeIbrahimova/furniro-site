@@ -5,6 +5,8 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const baseURL = `${import.meta.env.VITE_APP_BASE_URL}`;
+
 const token = localStorage.getItem("token");
 export const postReview = createAsyncThunk(
 	"postReview",
@@ -19,7 +21,7 @@ export const postReview = createAsyncThunk(
 	) => {
 		try {
 			const res = await axios.post(
-				"https://immutable858-001-site1.atempurl.com/api/Review",
+				`${baseURL}/Review`,
 				values,
 				{
 					headers: {
@@ -46,7 +48,7 @@ export const fetchReview = createAsyncThunk(
 		count: number;
 	}) => {
 		const res = await axios.get(
-			`https://immutable858-001-site1.atempurl.com/api/Review/ProductReviews?ProductId=${productId}&ShowMore.Take=${count}`
+			`${baseURL}/Review/ProductReviews?ProductId=${productId}&ShowMore.Take=${count}`
 		);
 
 		return res.data;
@@ -61,7 +63,7 @@ export const deleteReview = createAsyncThunk(
 		appUserId: number;
 	}) => {
 		const res = await axios.delete(
-			"https://immutable858-001-site1.atempurl.com/api/Review",
+			`${baseURL}/Review`,
 			{
 				data: values,
 				headers: {

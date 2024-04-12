@@ -1,6 +1,7 @@
 import { combineReducers, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 
+const baseURL = `${import.meta.env.VITE_APP_BASE_URL}`;
 
 export const postEmailForgetPassword=createAsyncThunk(
     "passwordEmail",
@@ -12,7 +13,7 @@ export const postEmailForgetPassword=createAsyncThunk(
 	) => {
 		try {
 			const res = await axios.post(
-				"https://immutable858-001-site1.atempurl.com/api/ForgotPassword/SendOTPEmail",
+				`${baseURL}/ForgotPassword/SendOTPEmail`,
 				values
 			);
 			return res.data;
@@ -33,7 +34,7 @@ export const postEmailForgetPassword=createAsyncThunk(
 	) => {
 		try {
 			const res = await axios.post(
-				"https://immutable858-001-site1.atempurl.com/api/ForgotPassword/OtpConfirmation",
+				`${baseURL}/ForgotPassword/OtpConfirmation`,
 				values
 			);
 			return res.data;
@@ -55,7 +56,7 @@ export const postEmailForgetPassword=createAsyncThunk(
 	) => {
 		try {
 			const res = await axios.post(
-				"https://immutable858-001-site1.atempurl.com/api/ForgotPassword/ResetPassword",
+				`${baseURL}/ForgotPassword/ResetPassword`,
 				values
 			);
 			return res.data;

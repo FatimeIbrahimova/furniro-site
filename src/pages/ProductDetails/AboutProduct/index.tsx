@@ -72,7 +72,7 @@ const AboutProduct = () => {
 		onSubmit: (values) => {
 			dispatch(postReview(values)).then((confirm) => {
 				if (confirm.meta.requestStatus === "rejected") {
-					console.log("Confirm: ", confirm);
+					// console.log("Confirm: ", confirm);
 				} else if (confirm.meta.requestStatus === "fulfilled") {
 					Swal.fire("Comment Completed");
 					resetForm();

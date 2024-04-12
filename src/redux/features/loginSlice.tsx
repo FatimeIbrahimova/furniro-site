@@ -1,6 +1,8 @@
 import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const baseURL = `${import.meta.env.VITE_APP_BASE_URL}`;
+
 export const postLogin = createAsyncThunk(
     "postLogin",
     async (values: {
@@ -9,7 +11,7 @@ export const postLogin = createAsyncThunk(
     },{rejectWithValue}) => {
       try {
         const res = await axios.post(
-          "https://immutable858-001-site1.atempurl.com/api/ApplicationUser/Login",
+          `${baseURL}/ApplicationUser/Login`,
           values
         );
   
@@ -52,14 +54,13 @@ export const loginSlice = createSlice({
         .addCase(postLogin.fulfilled,(state,action)=>{
             state.status = "succeeded";
             state.data = action.payload; 
-            console.log("payload",action.payload);
             
 			
         })
         .addCase(postLogin.rejected, (state, action) => {
             state.status = "failed";
             state.error = action.error.message;
-            console.log( state.error);
+           
             
         })
         .addCase(clearLoginError, (state) => {

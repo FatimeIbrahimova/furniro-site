@@ -12,23 +12,33 @@ import { ProductCard, ShopFilter } from "../../components";
 
 const Shop = () => {
 	const data = useSelector((state: RootState) => state.data.dataShop.data);
-	const dataProductsLength = data?.map((item) => item?.products?.length);
+	const dataProductsLength: any = data?.map((item) => item?.products?.length);
 
 	const [selectedTitle, setSelectedTitle] = useState<any>("");
-	const [filterNumber, setFilterNumber] = useState<number>(12);
+	const [filterNumber, setFilterNumber] = useState<number>(8);
+
+	//for ShopFilter
+	const [selectedCategories, setSelectedCategories] = useState([]);
+	const [selectedTags, setSelectedTags] = useState([]);
+	const [selectedSizes, setSelectedSizes] = useState([]);
+	const [selectedColors, setSelectedColors] = useState([]);
+	const [selectedMinPrice, setSelectedMinPrice] = useState(0);
+	const [selectedMaxPrice, setSelectedMaxPrice] = useState(0);
+	const [isNewChecked, setNewChecked] = useState(false);
+	//
 
 	const handleTitleChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
 		const selectedValue = e.target.value;
 
 		setSelectedTitle(selectedValue);
 	};
-	useEffect(() => {
-		const productsLength = data?.[0]?.products?.length;
-		const totalProductCount = data?.[0]?.totalProductCount;
-		if (productsLength !== undefined && totalProductCount !== undefined) {
-			setFilterNumber(productsLength);
-		}
-	}, [data]);
+	// useEffect(() => {
+	// 	const productsLength = data?.[0]?.products?.length;
+	// 	const totalProductCount = data?.[0]?.totalProductCount;
+	// 	if (productsLength !== undefined && totalProductCount !== undefined) {
+	// 		setFilterNumber(productsLength);
+	// 	}
+	// }, [data]);
 
 	useEffect(() => {
 		window.scrollTo({
@@ -62,7 +72,7 @@ const Shop = () => {
 	};
 
 	const handleResetFilterNumber = () => {
-		setFilterNumber(12);
+		setFilterNumber(filterNumber);
 	};
 
 	return (
@@ -81,8 +91,8 @@ const Shop = () => {
 						<img src={Svg3} alt="svg" onClick={() => handleClickList()} />
 						<div className="line"></div>
 						<span>
-							Showing 1–{filterNumber ? filterNumber : dataProductsLength} of{" "}
-							{data?.[0]?.totalProductCount} results
+							Showing 1–{dataProductsLength} of {data?.[0]?.totalProductCount}{" "}
+							results
 						</span>
 					</div>
 					<div className="products-filter-container-rightside">
@@ -90,12 +100,13 @@ const Shop = () => {
 						<input
 							type="number"
 							min="1"
-							max={filterNumber}
+							max={dataProductsLength}
 							className="sort_number"
 							value={filterNumber}
 							onChange={(e) => handleNumberChange(e)}
 						/>
-						<span>Short by</span>
+
+						<span>Sort by</span>
 						<select className="sort" onChange={handleTitleChange}>
 							<option value="nameasc">Title A-Z</option>
 							<option value="namedesc">Title Z-A</option>
@@ -110,9 +121,33 @@ const Shop = () => {
 				selectedTitle={selectedTitle}
 				filterNumber={filterNumber}
 				resetFilterNumber={handleResetFilterNumber}
+				selectedCategories={selectedCategories}
+				setSelectedCategories={setSelectedCategories}
+				selectedTags={selectedTags}
+				setSelectedTags={setSelectedTags}
+				selectedSizes={selectedSizes}
+				setSelectedSizes={setSelectedSizes}
+				selectedColors={selectedColors}
+				setSelectedColors={setSelectedColors}
+				selectedMinPrice={selectedMinPrice}
+				setSelectedMinPrice={setSelectedMinPrice}
+				selectedMaxPrice={selectedMaxPrice}
+				setSelectedMaxPrice={setSelectedMaxPrice}
+				isNewChecked={isNewChecked}
+				setNewChecked={setNewChecked}
 			/>
 			<ProductCard />
-			<Pagination />
+			<Pagination
+				filterNumber={filterNumber}
+				selectedTitle={selectedTitle}
+				selectedCategories={selectedCategories}
+				selectedTags={selectedTags}
+				selectedSizes={selectedSizes}
+				selectedColors={selectedColors}
+				selectedMinPrice={selectedMinPrice}
+				selectedMaxPrice={selectedMaxPrice}
+				isNewChecked={isNewChecked}
+			/>
 			<Features />
 		</div>
 	);

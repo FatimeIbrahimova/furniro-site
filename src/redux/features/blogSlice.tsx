@@ -6,6 +6,8 @@ import {
 import axios from "axios";
 import { blogTypes } from "../../types";
 
+const baseURL = `${import.meta.env.VITE_APP_BASE_URL}`;
+
 export const fetchBlog = createAsyncThunk(
 	"fetchBlog",
 	async ({
@@ -19,7 +21,7 @@ export const fetchBlog = createAsyncThunk(
 		value?: string;
 		categoryId?: number | string;
 	}) => {
-		let url = `https://immutable858-001-site1.atempurl.com/api/Blog?Page=${page}&ShowMore.Take=${count}`;
+		let url = `${baseURL}/Blog?Page=${page}&ShowMore.Take=${count}`;
 		if (value) {
 			url += `&Prompt=${value}`;
 		}
@@ -35,7 +37,7 @@ export const fetchRecentPosts = createAsyncThunk(
 	"fetchRecentPosts",
 	async () => {
 		const res = await axios.get(
-			`https://immutable858-001-site1.atempurl.com/api/Blog/recent-posts`
+			`${baseURL}/Blog/recent-posts`
 		);
 		return res.data;
 	}
@@ -45,7 +47,7 @@ export const fetchBlogCategories = createAsyncThunk(
 	"fetchCategories",
 	async () => {
 		const res = await axios.get(
-			`https://immutable858-001-site1.atempurl.com/api/Blog/blog-categories`
+			`${baseURL}/Blog/blog-categories`
 		);
 		return res.data;
 	}

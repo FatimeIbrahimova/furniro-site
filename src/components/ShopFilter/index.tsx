@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Select from "react-select";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import {
@@ -21,12 +21,40 @@ interface ShopFilterProps {
 	selectedTitle: string;
 	filterNumber: number;
 	resetFilterNumber: () => void;
+	selectedCategories:any;
+    setSelectedCategories:any;
+	selectedTags:any;
+	setSelectedTags:any;
+	selectedSizes:any;
+	setSelectedSizes:any;
+	selectedColors:any;
+	setSelectedColors:any;
+	selectedMinPrice:any;
+	setSelectedMinPrice:any;
+	selectedMaxPrice:any;
+	setSelectedMaxPrice:any;
+	isNewChecked:any;
+	setNewChecked:any;
 }
 const ShopFilter: React.FC<ShopFilterProps> = ({
 	isFilterVisible,
 	selectedTitle,
 	filterNumber,
 	resetFilterNumber,
+	selectedCategories,
+	setSelectedCategories,
+	selectedTags,
+	setSelectedTags,
+	selectedSizes,
+	setSelectedSizes,
+	selectedColors,
+	setSelectedColors,
+	selectedMinPrice,
+	setSelectedMinPrice,
+	selectedMaxPrice,
+	setSelectedMaxPrice,
+	isNewChecked,
+	setNewChecked
 }) => {
 	const categories = useSelector(
 		(state: RootState) => state.filterFeatures.categories.data
@@ -62,14 +90,6 @@ const ShopFilter: React.FC<ShopFilterProps> = ({
 					label: item.colorHexCode,
 			  }))
 			: [];
-
-	const [selectedCategories, setSelectedCategories] = useState([]);
-	const [selectedTags, setSelectedTags] = useState([]);
-	const [selectedSizes, setSelectedSizes] = useState([]);
-	const [selectedColors, setSelectedColors] = useState([]);
-	const [selectedMinPrice, setSelectedMinPrice] = useState(0);
-	const [selectedMaxPrice, setSelectedMaxPrice] = useState(0);
-	const [isNewChecked, setNewChecked] = useState(false);
 
 	const dispatch: ThunkDispatch<{}, void, AnyAction> = useDispatch();
 
