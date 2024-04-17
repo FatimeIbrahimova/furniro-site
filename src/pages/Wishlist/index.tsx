@@ -52,7 +52,6 @@ const Wishlist = () => {
 	}, []);
 	const favori = wishlistData?.[0]?.favorites;
 	const likedProductss = favori?.map((item: any) => item) || [];
-console.log(wishlistData);
 
 	return (
 		<div className="wishlist">
@@ -74,7 +73,7 @@ console.log(wishlistData);
 						<>
 							<div className="wishlist-section-container-title">
 								<h1>Product</h1>
-								<h1 className="color-title">Color</h1>
+								<h1 className="color-title">SubTitle</h1>
 								<h1>Price</h1>
 							</div>
 							<div className="liked-products-wrapper">
@@ -100,11 +99,11 @@ console.log(wishlistData);
 											<div
 												style={{
 													// backgroundColor: item.productImages.colorHexCode,
-													width: 35,
-													height: 35,
-													borderRadius: "50%",
+													width: 55,
+													// height: 35,
+													// borderRadius: "50%",
 												}}
-											></div>
+											>{item?.subTitle}</div>
 										</div>
 										<div className="price">
 											{item.discountedPrice

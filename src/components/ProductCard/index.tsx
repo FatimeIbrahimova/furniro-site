@@ -69,8 +69,6 @@ const ProductCard: React.FC<ProductTypes> = () => {
 	}, []);
 
 	const handleClickLike = (likedProduct: ProductTypes) => {
-		console.log(likedProduct.id);
-
 		setLikeClicked(true);
 		openModal(likedProduct.id);
 		setAddCard(false);
@@ -149,7 +147,6 @@ const ProductCard: React.FC<ProductTypes> = () => {
 	const favori = wishlistData?.[0]?.favorites;
 	const likedProductss = favori?.map((item: any) => item) || [];
 
-
 	return (
 		<div className="product-card">
 			<div className="product-card-container">
@@ -194,9 +191,7 @@ const ProductCard: React.FC<ProductTypes> = () => {
 													-{item.discountPercent}%
 												</span>
 											)}
-											{item.isNew && (
-												<span className="new">New</span>
-											)}
+											{item.isNew && <span className="new">New</span>}
 										</div>
 										<NavLink
 											to={`/product/${item.id}`}
@@ -368,9 +363,7 @@ const ProductCard: React.FC<ProductTypes> = () => {
 									{item.discountPercent !== 0 && item.discountedPrice && (
 										<span className="discount">-{item.discountPercent}%</span>
 									)}
-									{item.isNew && (
-										<span className="new">New</span>
-									)}
+									{item.isNew && <span className="new">New</span>}
 								</div>
 								<NavLink
 									to={`/product/${item.id}`}
@@ -400,9 +393,7 @@ const ProductCard: React.FC<ProductTypes> = () => {
 															src={SvgIcon1}
 															alt="icon"
 															onClick={() =>
-																handleSocialMediaShare(
-																	`${window.origin}/${id}`
-																)
+																handleSocialMediaShare(`${window.origin}/${id}`)
 															}
 														/>{" "}
 														Share
@@ -517,9 +508,7 @@ const ProductCard: React.FC<ProductTypes> = () => {
 									{item.discountPercent !== 0 && item.discountedPrice && (
 										<span className="discount">-{item.discountPercent}%</span>
 									)}
-									{item.isNew && (
-										<span className="new">New</span>
-									)}
+									{item.isNew && <span className="new">New</span>}
 								</div>
 								<NavLink
 									to={`/product/${item.id}`}
@@ -549,9 +538,7 @@ const ProductCard: React.FC<ProductTypes> = () => {
 															src={SvgIcon1}
 															alt="icon"
 															onClick={() =>
-																handleSocialMediaShare(
-																	`${window.origin}/${id}`
-																)
+																handleSocialMediaShare(`${window.origin}/${id}`)
 															}
 														/>{" "}
 														Share
